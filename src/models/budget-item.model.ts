@@ -1,7 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {SubItem} from './sub-item.model';
 
 @model()
-export class Category extends Entity {
+export class BudgetItem extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -10,19 +11,18 @@ export class Category extends Entity {
   id?: number;
 
   @property({
-    type: 'number',
-  })
-  fee?: number;
-
-  @property({
     type: 'string',
+    required: true,
   })
-  name?: string;
+  name: string;
 
   @property({
     type: 'string',
   })
   description?: string;
+
+  @hasMany(() => SubItem, {keyTo: 'budgetItemFk'})
+  subItems: SubItem[];
 
   // Define well-known properties here
 
@@ -30,13 +30,13 @@ export class Category extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Category>) {
+  constructor(data?: Partial<BudgetItem>) {
     super(data);
   }
 }
 
-export interface CategoryRelations {
+export interface BudgetItemRelations {
   // describe navigational properties here
 }
 
-export type CategoryWithRelations = Category & CategoryRelations;
+export type BudgetItemWithRelations = BudgetItem & BudgetItemRelations;

@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Category extends Entity {
+export class Supplier extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -10,19 +10,34 @@ export class Category extends Entity {
   id?: number;
 
   @property({
-    type: 'number',
+    type: 'string',
+    required: true,
   })
-  fee?: number;
+  name: string;
 
   @property({
     type: 'string',
+    default: null,
   })
-  name?: string;
+  nif?: string;
 
   @property({
     type: 'string',
+    default: null,
   })
-  description?: string;
+  address?: string;
+
+  @property({
+    type: 'string',
+    default: null,
+  })
+  phoneNumber?: string;
+
+  @property({
+    type: 'string',
+    default: null,
+  })
+  email?: string;
 
   // Define well-known properties here
 
@@ -30,13 +45,13 @@ export class Category extends Entity {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Category>) {
+  constructor(data?: Partial<Supplier>) {
     super(data);
   }
 }
 
-export interface CategoryRelations {
+export interface SupplierRelations {
   // describe navigational properties here
 }
 
-export type CategoryWithRelations = Category & CategoryRelations;
+export type SupplierWithRelations = Supplier & SupplierRelations;
