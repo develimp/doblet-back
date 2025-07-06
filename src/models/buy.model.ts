@@ -2,7 +2,13 @@ import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {SubItem} from './sub-item.model';
 import {Supplier} from './supplier.model';
 
-@model()
+@model({
+  settings: {
+    mysql: {
+      table: 'buy',  // nombre exacto en la DB, en minúsculas
+    },
+  },
+})
 export class Buy extends Entity {
   @property({
     type: 'number',

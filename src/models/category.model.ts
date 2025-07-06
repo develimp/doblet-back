@@ -1,6 +1,12 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model()
+@model({
+  settings: {
+    mysql: {
+      table: 'category',  // nombre exacto en la DB, en minúsculas
+    },
+  },
+})
 export class Category extends Entity {
   @property({
     type: 'number',

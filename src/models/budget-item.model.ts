@@ -1,7 +1,13 @@
 import {Entity, hasMany, model, property} from '@loopback/repository';
 import {SubItem} from './sub-item.model';
 
-@model()
+@model({
+  settings: {
+    mysql: {
+      table: 'budgetItem',  // nombre exacto en la DB, en minúsculas
+    },
+  },
+})
 export class BudgetItem extends Entity {
   @property({
     type: 'number',
