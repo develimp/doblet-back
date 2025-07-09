@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,11 +21,12 @@ import {
 import {Buy} from '../models';
 import {BuyRepository} from '../repositories';
 
+@authenticate('jwt')
 export class BuyController {
   constructor(
     @repository(BuyRepository)
-    public buyRepository : BuyRepository,
-  ) {}
+    public buyRepository: BuyRepository,
+  ) { }
 
   @post('/buys')
   @response(200, {
