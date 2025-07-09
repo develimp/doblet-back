@@ -49,13 +49,15 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^11.0.9",
+    "@loopback/authentication-jwt": "^0.15.9",
     "@loopback/boot": "^7.0.9",
     "@loopback/core": "^6.1.6",
     "@loopback/repository": "^7.0.9",
     "@loopback/rest": "^14.0.9",
     "@loopback/rest-explorer": "^7.0.9",
     "@loopback/service-proxy": "^7.0.9",
-    "loopback-connector-mysql": "^7.0.17",
+    "loopback-connector-mysql": "^7.1.4",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
