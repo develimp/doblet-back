@@ -1,22 +1,13 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Buy,
-  SubItem,
-} from '../models';
+import {repository} from '@loopback/repository';
+import {param, get, getModelSchemaRef} from '@loopback/rest';
+import {Buy, SubItem} from '../models';
 import {BuyRepository} from '../repositories';
 
 export class BuySubItemController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) { }
+  ) {}
 
   @get('/buys/{id}/sub-item', {
     responses: {

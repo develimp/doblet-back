@@ -1,5 +1,9 @@
 import {Getter, inject} from '@loopback/core';
-import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
+import {
+  DefaultCrudRepository,
+  HasManyRepositoryFactory,
+  repository,
+} from '@loopback/repository';
 import {SpDataSource} from '../datasources';
 import {BudgetItem, BudgetItemRelations, SubItem} from '../models';
 import {SubItemRepository} from './sub-item.repository';
@@ -9,7 +13,10 @@ export class BudgetItemRepository extends DefaultCrudRepository<
   typeof BudgetItem.prototype.id,
   BudgetItemRelations
 > {
-  public readonly subItems: HasManyRepositoryFactory<SubItem, typeof BudgetItem.prototype.id>;
+  public readonly subItems: HasManyRepositoryFactory<
+    SubItem,
+    typeof BudgetItem.prototype.id
+  >;
 
   constructor(
     @inject('datasources.sp') dataSource: SpDataSource,
@@ -17,7 +24,10 @@ export class BudgetItemRepository extends DefaultCrudRepository<
     protected subItemRepositoryGetter: Getter<SubItemRepository>,
   ) {
     super(BudgetItem, dataSource);
-    this.subItems = this.createHasManyRepositoryFactoryFor('subItems', subItemRepositoryGetter);
+    this.subItems = this.createHasManyRepositoryFactoryFor(
+      'subItems',
+      subItemRepositoryGetter,
+    );
     this.registerInclusionResolver('subItems', this.subItems.inclusionResolver);
   }
 }

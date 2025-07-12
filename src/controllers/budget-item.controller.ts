@@ -23,7 +23,7 @@ import {BudgetItemRepository} from '../repositories';
 export class BudgetItemController {
   constructor(
     @repository(BudgetItemRepository)
-    public budgetItemRepository : BudgetItemRepository,
+    public budgetItemRepository: BudgetItemRepository,
   ) {}
 
   @post('/budget-items')
@@ -106,7 +106,8 @@ export class BudgetItemController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(BudgetItem, {exclude: 'where'}) filter?: FilterExcludingWhere<BudgetItem>
+    @param.filter(BudgetItem, {exclude: 'where'})
+    filter?: FilterExcludingWhere<BudgetItem>,
   ): Promise<BudgetItem> {
     return this.budgetItemRepository.findById(id, filter);
   }
@@ -166,9 +167,7 @@ export class BudgetItemController {
       },
     },
   })
-  async findSubItems(
-    @param.path.number('id') id: number,
-  ): Promise<SubItem[]> {
+  async findSubItems(@param.path.number('id') id: number): Promise<SubItem[]> {
     return this.budgetItemRepository.subItems(id).find();
   }
 }

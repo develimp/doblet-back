@@ -14,27 +14,28 @@
   "scripts": {
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
-    "lint": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "lint": "pnpm run eslint && pnpm run prettier:check",
+    "lint:fix": "pnpm run eslint:fix && pnpm run prettier:fix",
     "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
+    "prettier:check": "lb-prettier \"**/*.ts\" \"**/*.js\" --list-different",
+    "prettier:fix": "lb-prettier \"**/*.ts\" \"**/*.js\" --write",
     "eslint": "lb-eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
+    "eslint:fix": "pnpm run eslint -- --fix",
+    "pretest": "pnpm run rebuild",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "posttest": "pnpm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && pnpm run posttest",
     "docker:build": "docker build -t api .",
     "docker:run": "docker run -p 3000:3000 -d api",
-    "premigrate": "npm run build",
+    "premigrate": "pnpm run build",
     "migrate": "node ./dist/migrate",
-    "preopenapi-spec": "npm run build",
+    "preopenapi-spec": "pnpm run build",
     "openapi-spec": "node ./dist/openapi-spec",
-    "prestart": "npm run rebuild",
+    "prestart": "pnpm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "pnpm run clean && pnpm run build",
+    "start:prod": "NODE_ENV=production pnpm start"
   },
   "repository": {
     "type": "git",
@@ -56,7 +57,10 @@
     "@loopback/repository": "^7.0.9",
     "@loopback/rest": "^14.0.9",
     "@loopback/rest-explorer": "^7.0.9",
+    "@loopback/security": "^0.12.2",
     "@loopback/service-proxy": "^7.0.9",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.0",
     "loopback-connector-mysql": "^7.1.4",
     "tslib": "^2.0.0"
   },
@@ -64,9 +68,16 @@
     "@loopback/build": "^11.0.8",
     "@loopback/eslint-config": "^15.0.4",
     "@loopback/testlab": "^7.0.8",
-    "@types/node": "^16.18.119",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^18.18.6",
     "eslint": "^8.57.0",
     "source-map-support": "^0.5.21",
     "typescript": "~5.2.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@loopback/security": "^0.12.2"
+    }
   }
 }

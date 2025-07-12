@@ -26,7 +26,7 @@ export class BuyController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) { }
+  ) {}
 
   @post('/buys')
   @response(200, {
@@ -54,9 +54,7 @@ export class BuyController {
     description: 'Buy model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Buy) where?: Where<Buy>,
-  ): Promise<Count> {
+  async count(@param.where(Buy) where?: Where<Buy>): Promise<Count> {
     return this.buyRepository.count(where);
   }
 
@@ -72,9 +70,7 @@ export class BuyController {
       },
     },
   })
-  async find(
-    @param.filter(Buy) filter?: Filter<Buy>,
-  ): Promise<Buy[]> {
+  async find(@param.filter(Buy) filter?: Filter<Buy>): Promise<Buy[]> {
     return this.buyRepository.find(filter);
   }
 
@@ -108,7 +104,7 @@ export class BuyController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Buy, {exclude: 'where'}) filter?: FilterExcludingWhere<Buy>
+    @param.filter(Buy, {exclude: 'where'}) filter?: FilterExcludingWhere<Buy>,
   ): Promise<Buy> {
     return this.buyRepository.findById(id, filter);
   }

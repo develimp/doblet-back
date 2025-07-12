@@ -5,7 +5,7 @@ import {Supplier} from './supplier.model';
 @model({
   settings: {
     mysql: {
-      table: 'buy',  // nombre exacto en la DB, en minúsculas
+      table: 'buy', // nombre exacto en la DB, en minúsculas
     },
   },
 })

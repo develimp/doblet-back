@@ -1,4 +1,8 @@
-import {TokenService, UserService, authenticate} from '@loopback/authentication';
+import {
+  TokenService,
+  UserService,
+  authenticate,
+} from '@loopback/authentication';
 import {
   TokenServiceBindings,
   UserServiceBindings,
@@ -18,10 +22,7 @@ import {hash} from 'bcryptjs';
 import {User, UserCredentials} from '../models';
 import {LoginRequest} from '../models/login-request.model';
 import {SignupRequest} from '../models/signup-request.model';
-import {
-  UserCredentialsRepository,
-  UserRepository,
-} from '../repositories';
+import {UserCredentialsRepository, UserRepository} from '../repositories';
 
 export class UserController {
   constructor(
@@ -36,7 +37,7 @@ export class UserController {
 
     @inject(UserServiceBindings.USER_SERVICE)
     public userService: UserService<User, LoginRequest>,
-  ) { }
+  ) {}
 
   @post('/signup', {
     responses: {
@@ -144,4 +145,3 @@ export class UserController {
     return {id: user.id!, email: user.email};
   }
 }
-

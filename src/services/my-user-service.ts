@@ -15,7 +15,7 @@ export class MyUserService implements UserService<User, Credentials> {
 
     @repository(UserCredentialsRepository)
     public userCredentialsRepository: UserCredentialsRepository,
-  ) { }
+  ) {}
 
   async verifyCredentials(credentials: Credentials): Promise<User> {
     const invalidCredentialsError = 'Invalid email or password.';

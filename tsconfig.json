@@ -3,7 +3,13 @@
   "extends": "@loopback/build/config/tsconfig.common.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": [
+      "node",
+      "mocha"
+    ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
