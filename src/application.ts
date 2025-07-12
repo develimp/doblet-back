@@ -54,4 +54,3 @@ export class ApiApplication extends BootMixin(
     };
   }
 }
-

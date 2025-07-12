@@ -8,4 +8,3 @@ export class SignupRequest {
   @property({type: 'string', required: true})
   password: string;
 }
-

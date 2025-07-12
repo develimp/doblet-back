@@ -8,9 +8,7 @@ export class SubItemRepository extends DefaultCrudRepository<
   typeof SubItem.prototype.id,
   SubItemRelations
 > {
-  constructor(
-    @inject('datasources.sp') dataSource: SpDataSource,
-  ) {
+  constructor(@inject('datasources.sp') dataSource: SpDataSource) {
     super(SubItem, dataSource);
   }
 }

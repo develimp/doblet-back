@@ -8,9 +8,7 @@ export class SupplierRepository extends DefaultCrudRepository<
   typeof Supplier.prototype.id,
   SupplierRelations
 > {
-  constructor(
-    @inject('datasources.sp') dataSource: SpDataSource,
-  ) {
+  constructor(@inject('datasources.sp') dataSource: SpDataSource) {
     super(Supplier, dataSource);
   }
 }

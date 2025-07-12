@@ -23,7 +23,7 @@ import {SubItemRepository} from '../repositories';
 export class SubItemController {
   constructor(
     @repository(SubItemRepository)
-    public subItemRepository : SubItemRepository,
+    public subItemRepository: SubItemRepository,
   ) {}
 
   @post('/sub-items')
@@ -52,9 +52,7 @@ export class SubItemController {
     description: 'SubItem model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(SubItem) where?: Where<SubItem>,
-  ): Promise<Count> {
+  async count(@param.where(SubItem) where?: Where<SubItem>): Promise<Count> {
     return this.subItemRepository.count(where);
   }
 
@@ -106,7 +104,8 @@ export class SubItemController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(SubItem, {exclude: 'where'}) filter?: FilterExcludingWhere<SubItem>
+    @param.filter(SubItem, {exclude: 'where'})
+    filter?: FilterExcludingWhere<SubItem>,
   ): Promise<SubItem> {
     return this.subItemRepository.findById(id, filter);
   }

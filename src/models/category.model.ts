@@ -3,7 +3,7 @@ import {Entity, model, property} from '@loopback/repository';
 @model({
   settings: {
     mysql: {
-      table: 'category',  // nombre exacto en la DB, en minúsculas
+      table: 'category', // nombre exacto en la DB, en minúsculas
     },
   },
 })

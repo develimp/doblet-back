@@ -21,7 +21,6 @@ export class User extends Entity {
   })
   email: string;
 
-
   constructor(data?: Partial<User>) {
     super(data);
   }

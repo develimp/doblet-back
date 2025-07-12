@@ -1,73 +1,112 @@
-# api
+# Doblet-back
 
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
 [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 
-## Install dependencies
+## 🚀 Installation
 
-By default, dependencies were installed when this application was generated.
-Whenever dependencies in `package.json` are changed, run the following command:
+Install dependencies using [pnpm](https://pnpm.io/):
 
-```sh
-npm install
+```bash
+pnpm install
 ```
 
-To only install resolved dependencies in `package-lock.json`:
+> If you don't have pnpm installed, you can install it globally with:
+> npm install -g pnpm
 
-```sh
-npm ci
+## ⚙️ Environment configuration
+
+This project uses environment variables defined in .env files.
+
+### Files:
+- .env.local: for local development
+- .env.production: for production deployment
+
+> ⚠️ Both files are excluded from version control (.gitignore).
+Do not commit them to Git. Create your own copies based on the example.
+
+### Create your environment file:
+
+```bash
+cp .env.example .env.local
 ```
 
-## Run the application
+### Example .env.example structure:
 
-```sh
-npm start
+```env
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+```
+
+## ▶️ Running the application
+
+### Development (uses .env.local):
+
+```bash
+pnpm start
 ```
 
 You can also run `node .` to skip the build step.
 
 Open http://127.0.0.1:3000 in your browser.
 
-## Rebuild the project
+### Production (uses .env.production):
 
-To incrementally build the project:
-
-```sh
-npm run build
+```bash
+NODE_ENV=production pnpm start
 ```
 
-To force a full build by cleaning up cached artifacts:
+Or use the npm script:
 
-```sh
-npm run rebuild
+```bash
+pnpm run start:prod
 ```
 
-## Fix code style and formatting issues
+## 🔁 Rebuild the project
 
-```sh
-npm run lint
+### To incrementally build the project:
+
+```bash
+pnpm run build
 ```
 
-To automatically fix such issues:
+### To force a full build by cleaning up cached artifacts:
 
-```sh
-npm run lint:fix
+```bash
+pnpm run rebuild
 ```
 
-## Other useful commands
+## ✅ Lint and format
+
+### Check for style errors:
+
+```bash
+pnpm run lint
+```
+
+### Automatically fix issues:
+
+```bash
+pnpm run lint:fix
+pnpm run prettier:fix
+```
+
+## 🧪 Tests
+
+```bash
+pnpm run test
+```
+## 🛠️ Other useful commands
 
 - `npm run migrate`: Migrate database schemas for models
 - `npm run openapi-spec`: Generate OpenAPI spec into a file
 - `npm run docker:build`: Build a Docker image for this application
 - `npm run docker:run`: Run this application inside a Docker container
 
-## Tests
-
-```sh
-npm test
-```
-
-## What's next
+## 📚 More information
 
 Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
 understand how you can continue to add features to this application.
