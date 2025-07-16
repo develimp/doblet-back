@@ -1,14 +1,36 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {
+  BelongsToAccessor,
+  DefaultCrudRepository,
+  repository,
+} from '@loopback/repository';
 import {SpDataSource} from '../datasources';
-import {SubItem, SubItemRelations} from '../models';
+import {BudgetItem, SubItem, SubItemRelations} from '../models';
+import {BudgetItemRepository} from './budget-item.repository';
 
 export class SubItemRepository extends DefaultCrudRepository<
   SubItem,
   typeof SubItem.prototype.id,
   SubItemRelations
 > {
-  constructor(@inject('datasources.sp') dataSource: SpDataSource) {
+  public readonly budgetItem: BelongsToAccessor<
+    BudgetItem,
+    typeof SubItem.prototype.id
+  >;
+
+  constructor(
+    @inject('datasources.sp') dataSource: SpDataSource,
+    @repository.getter('BudgetItemRepository')
+    protected budgetItemRepositoryGetter: Getter<BudgetItemRepository>,
+  ) {
     super(SubItem, dataSource);
+    this.budgetItem = this.createBelongsToAccessorFor(
+      'budgetItem',
+      budgetItemRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'budgetItem',
+      this.budgetItem.inclusionResolver,
+    );
   }
 }

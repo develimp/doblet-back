@@ -26,7 +26,7 @@ export class BuyController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) {}
+  ) { }
 
   @post('/buys')
   @response(200, {
@@ -71,7 +71,21 @@ export class BuyController {
     },
   })
   async find(@param.filter(Buy) filter?: Filter<Buy>): Promise<Buy[]> {
-    return this.buyRepository.find(filter);
+    const finalFilter: Filter<Buy> = {
+      ...filter,
+      include: [
+        ...(filter?.include ?? []),
+        {
+          relation: 'subItem',
+          scope: {
+            include: [{relation: 'budgetItem'}],
+          },
+        },
+        {relation: 'supplier'},
+      ],
+    };
+
+    return this.buyRepository.find(finalFilter);
   }
 
   @patch('/buys')
