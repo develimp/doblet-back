@@ -1,4 +1,5 @@
 import {authenticate} from '@loopback/authentication';
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -17,7 +18,15 @@ import {
   put,
   requestBody,
   response,
+  Response,
+  RestBindings,
 } from '@loopback/rest';
+import fsSync from 'fs';
+import * as fs from 'fs/promises';
+import handlebars from 'handlebars';
+import * as path from 'path';
+import puppeteer from 'puppeteer';
+
 import {Buy} from '../models';
 import {BuyRepository} from '../repositories';
 
@@ -158,5 +167,49 @@ export class BuyController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.buyRepository.deleteById(id);
+  }
+
+  @get('/buys/pdf')
+  @response(200, {
+    description: 'PDF generated successfully',
+    content: {'application/pdf': {schema: {type: 'string', format: 'binary'}}},
+  })
+  async generateBuyListPDF(
+    @inject(RestBindings.Http.RESPONSE) res: Response,
+  ): Promise<void> {
+    const buys = await this.buyRepository.find({
+      include: [
+        {relation: 'subItem', scope: {include: [{relation: 'budgetItem'}]}},
+        {relation: 'supplier'},
+      ],
+    });
+
+    let templatePath = path.join(process.cwd(), 'dist', 'templates', 'buy-list.hbs');
+    if (!fsSync.existsSync(templatePath)) {
+      const devPath = path.join(process.cwd(), 'src', 'templates', 'buy-list.hbs');
+      if (fsSync.existsSync(devPath)) {
+        templatePath = devPath;
+      } else {
+        throw new Error('No se encontró la plantilla buy-list.hbs');
+      }
+    }
+
+    const templateContent = await fs.readFile(templatePath, 'utf-8');
+    const template = handlebars.compile(templateContent);
+    const html = template({buys});
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const page = await browser.newPage();
+    await page.setContent(html, {waitUntil: 'networkidle0'});
+    const pdf = await page.pdf({format: 'A4'});
+    await browser.close();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="buy-list.pdf"');
+    res.end(pdf);
   }
 }
