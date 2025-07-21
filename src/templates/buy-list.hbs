@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Llistat de compres</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Llistat de compres</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Subpartida</th>
+        <th>Partida</th>
+        <th>Proveïdor</th>
+        <th>Quantitat</th>
+        <th>Data compra</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each buys}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{subItem.name}}</td>
+        <td>{{subItem.budgetItem.name}}</td>
+        <td>{{supplier.name}}</td>
+        <td>{{amount}} €</td>
+        <td>{{buyed}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
+
+</html>
