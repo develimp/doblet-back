@@ -6,3 +6,5 @@ export * from './category.controller';
 export * from './ping.controller';
 export * from './sub-item.controller';
 export * from './supplier.controller';
+export * from './sale.controller';
+export * from './client.controller';
