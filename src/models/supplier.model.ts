@@ -3,7 +3,7 @@ import {Entity, model, property} from '@loopback/repository';
 @model({
   settings: {
     mysql: {
-      table: 'supplier', // nombre exacto en la DB, en minúsculas
+      table: 'supplier',
     },
   },
 })
@@ -44,6 +44,12 @@ export class Supplier extends Entity {
     default: null,
   })
   email?: string;
+
+  @property({
+    type: 'string',
+    default: null,
+  })
+  description?: string;
 
   // Define well-known properties here
 
