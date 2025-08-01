@@ -35,7 +35,7 @@ export class BuyController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) { }
+  ) {}
 
   @post('/buys')
   @response(200, {
@@ -184,9 +184,19 @@ export class BuyController {
       ],
     });
 
-    let templatePath = path.join(process.cwd(), 'dist', 'templates', 'buy-list.hbs');
+    let templatePath = path.join(
+      process.cwd(),
+      'dist',
+      'templates',
+      'buy-list.hbs',
+    );
     if (!fsSync.existsSync(templatePath)) {
-      const devPath = path.join(process.cwd(), 'src', 'templates', 'buy-list.hbs');
+      const devPath = path.join(
+        process.cwd(),
+        'src',
+        'templates',
+        'buy-list.hbs',
+      );
       if (fsSync.existsSync(devPath)) {
         templatePath = devPath;
       } else {

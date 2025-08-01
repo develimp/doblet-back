@@ -36,6 +36,11 @@ if (require.main === module) {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+      cors: {
+        origin: ['https://doblet.santspatrons.com'],
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+        credentials: true,
+      },
     },
   };
   main(config).catch(err => {

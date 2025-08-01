@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,11 +21,12 @@ import {
 import {Sale} from '../models';
 import {SaleRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SaleController {
   constructor(
     @repository(SaleRepository)
     public saleRepository: SaleRepository,
-  ) { }
+  ) {}
 
   @post('/sales')
   @response(200, {
@@ -52,9 +54,7 @@ export class SaleController {
     description: 'Sale model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Sale) where?: Where<Sale>,
-  ): Promise<Count> {
+  async count(@param.where(Sale) where?: Where<Sale>): Promise<Count> {
     return this.saleRepository.count(where);
   }
 
@@ -118,7 +118,7 @@ export class SaleController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Sale, {exclude: 'where'}) filter?: FilterExcludingWhere<Sale>
+    @param.filter(Sale, {exclude: 'where'}) filter?: FilterExcludingWhere<Sale>,
   ): Promise<Sale> {
     return this.saleRepository.findById(id, filter);
   }

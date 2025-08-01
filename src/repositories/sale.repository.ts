@@ -1,5 +1,9 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
+import {
+  BelongsToAccessor,
+  DefaultCrudRepository,
+  repository,
+} from '@loopback/repository';
 import {SpDataSource} from '../datasources';
 import {Client, Sale, SaleRelations, SubItem} from '../models';
 import {ClientRepository} from './client.repository';
@@ -12,10 +16,7 @@ export class SaleRepository extends DefaultCrudRepository<
 > {
   public readonly subItem: BelongsToAccessor<SubItem, typeof Sale.prototype.id>;
 
-  public readonly client: BelongsToAccessor<
-    Client,
-    typeof Sale.prototype.id
-  >;
+  public readonly client: BelongsToAccessor<Client, typeof Sale.prototype.id>;
   constructor(
     @inject('datasources.sp') dataSource: SpDataSource,
     @repository.getter('SubItemRepository')
