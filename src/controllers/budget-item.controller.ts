@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,11 +21,12 @@ import {
 import {BudgetItem, SubItem} from '../models';
 import {BudgetItemRepository} from '../repositories';
 
+@authenticate('jwt')
 export class BudgetItemController {
   constructor(
     @repository(BudgetItemRepository)
     public budgetItemRepository: BudgetItemRepository,
-  ) {}
+  ) { }
 
   @post('/budget-items')
   @response(200, {
@@ -158,7 +160,6 @@ export class BudgetItemController {
             schema: {
               type: 'array',
               items: {
-                // el schema del modelo relacionado
                 $ref: '#/components/schemas/SubItem',
               },
             },

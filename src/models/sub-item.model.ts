@@ -4,7 +4,7 @@ import {BudgetItem} from './budget-item.model';
 @model({
   settings: {
     mysql: {
-      table: 'subItem', // nombre exacto en la DB, en minúsculas
+      table: 'subItem',
     },
   },
 })

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,24 +8,25 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {SubItem} from '../models';
 import {SubItemRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SubItemController {
   constructor(
     @repository(SubItemRepository)
     public subItemRepository: SubItemRepository,
-  ) {}
+  ) { }
 
   @post('/sub-items')
   @response(200, {

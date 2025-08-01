@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,24 +8,25 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Supplier} from '../models';
 import {SupplierRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SupplierController {
   constructor(
     @repository(SupplierRepository)
     public supplierRepository: SupplierRepository,
-  ) {}
+  ) { }
 
   @post('/suppliers')
   @response(200, {

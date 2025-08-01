@@ -39,6 +39,7 @@ export class UserController {
     public userService: UserService<User, LoginRequest>,
   ) {}
 
+  @authenticate('jwt')
   @post('/signup', {
     responses: {
       '200': {

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,24 +8,25 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Client} from '../models';
 import {ClientRepository} from '../repositories';
 
+@authenticate('jwt')
 export class ClientController {
   constructor(
     @repository(ClientRepository)
-    public clientRepository : ClientRepository,
-  ) {}
+    public clientRepository: ClientRepository,
+  ) { }
 
   @post('/clients')
   @response(200, {
@@ -52,9 +54,7 @@ export class ClientController {
     description: 'Client model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Client) where?: Where<Client>,
-  ): Promise<Count> {
+  async count(@param.where(Client) where?: Where<Client>): Promise<Count> {
     return this.clientRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class ClientController {
       },
     },
   })
-  async find(
-    @param.filter(Client) filter?: Filter<Client>,
-  ): Promise<Client[]> {
+  async find(@param.filter(Client) filter?: Filter<Client>): Promise<Client[]> {
     return this.clientRepository.find(filter);
   }
 
@@ -106,7 +104,8 @@ export class ClientController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Client, {exclude: 'where'}) filter?: FilterExcludingWhere<Client>
+    @param.filter(Client, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Client>,
   ): Promise<Client> {
     return this.clientRepository.findById(id, filter);
   }

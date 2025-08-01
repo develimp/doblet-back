@@ -1,5 +1,8 @@
 # Check out https://hub.docker.com/_/node to select a new base image
-FROM docker.io/library/node:18-slim
+FROM node:18-slim
+
+# Install pnpm globally
+RUN npm install -g pnpm
 
 # Set to a non-root built-in user `node`
 USER node
@@ -12,17 +15,17 @@ WORKDIR /home/node/app
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY --chown=node package*.json ./
+COPY --chown=node:node pnpm-lock.yaml package.json ./
 
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 # Bundle app source code
-COPY --chown=node . .
+COPY --chown=node:node . .
 
-RUN npm run build
+RUN pnpm build
 
 # Bind to all network interfaces so that it can be mapped to the host OS
 ENV HOST=0.0.0.0 PORT=3000
 
 EXPOSE ${PORT}
-CMD [ "node", "." ]
+CMD [ "pnpm", "start" ]
