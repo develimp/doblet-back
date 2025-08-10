@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasOne, model, property} from '@loopback/repository';
+import {Member} from './member.model';
 
 @model({
   settings: {
@@ -21,13 +22,16 @@ export class User extends Entity {
   })
   email: string;
 
+  @hasOne(() => Member, {keyFrom: 'id', keyTo: 'id'})
+  member: Member;
+
   constructor(data?: Partial<User>) {
     super(data);
   }
 }
 
 export interface UserRelations {
-  // describe navigational properties here
+  member?: Member;
 }
 
 export type UserWithRelations = User & UserRelations;

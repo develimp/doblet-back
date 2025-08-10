@@ -26,7 +26,7 @@ export class SupplierController {
   constructor(
     @repository(SupplierRepository)
     public supplierRepository: SupplierRepository,
-  ) { }
+  ) {}
 
   @post('/suppliers')
   @response(200, {

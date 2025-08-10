@@ -26,7 +26,7 @@ export class ClientController {
   constructor(
     @repository(ClientRepository)
     public clientRepository: ClientRepository,
-  ) { }
+  ) {}
 
   @post('/clients')
   @response(200, {

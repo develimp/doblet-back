@@ -26,7 +26,7 @@ export class SubItemController {
   constructor(
     @repository(SubItemRepository)
     public subItemRepository: SubItemRepository,
-  ) { }
+  ) {}
 
   @post('/sub-items')
   @response(200, {

@@ -26,7 +26,7 @@ export class BudgetItemController {
   constructor(
     @repository(BudgetItemRepository)
     public budgetItemRepository: BudgetItemRepository,
-  ) { }
+  ) {}
 
   @post('/budget-items')
   @response(200, {

@@ -9,7 +9,7 @@ export class BuySupplierController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) { }
+  ) {}
 
   @get('/buys/{id}/supplier', {
     responses: {
