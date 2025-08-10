@@ -139,10 +139,11 @@ export class UserController {
   async whoAmI(
     @inject(SecurityBindings.USER)
     currentUserProfile: UserProfile,
-  ): Promise<{id: number; email: string}> {
+  ): Promise<{id: number; email: string; name?: string}> {
     const user = await this.userRepository.findById(
       Number(currentUserProfile[securityId]),
+      {include: [{relation: 'member'}]},
     );
-    return {id: user.id!, email: user.email};
+    return {id: user.id!, email: user.email, name: user.member?.name};
   }
 }

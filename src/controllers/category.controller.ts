@@ -26,7 +26,7 @@ export class CategoryController {
   constructor(
     @repository(CategoryRepository)
     public categoryRepository: CategoryRepository,
-  ) { }
+  ) {}
 
   @post('/categories')
   @response(200, {
