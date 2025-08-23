@@ -1,4 +1,5 @@
 import {authenticate} from '@loopback/authentication';
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,6 +19,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import {SpDataSource} from '../datasources';
 import {Member} from '../models';
 import {MemberRepository} from '../repositories';
 
@@ -26,7 +28,8 @@ export class MemberController {
   constructor(
     @repository(MemberRepository)
     public memberRepository: MemberRepository,
-  ) {}
+    @inject('datasources.sp') private dataSource: SpDataSource,
+  ) { }
 
   @post('/members')
   @response(200, {
@@ -145,5 +148,30 @@ export class MemberController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.memberRepository.deleteById(id);
+  }
+
+  @post('/members/register-all-direct-debit-payments')
+  async registerAllDirectDebitPayments(
+    @requestBody({
+      description: 'Register direct debit payments for all members',
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              date: {type: 'string', format: 'date'},
+              note: {type: 'string'},
+            },
+            required: ['date', 'note'],
+          },
+        },
+      },
+    })
+    body: {date: string; note: string},
+  ): Promise<any> {
+    const sql = `CALL registerAllDirectDebitPayments(?, ?)`;
+    const result = await this.dataSource.execute(sql, [body.date, body.note]);
+    return result;
   }
 }
