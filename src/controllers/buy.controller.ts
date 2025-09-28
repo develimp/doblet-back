@@ -35,7 +35,7 @@ export class BuyController {
   constructor(
     @repository(BuyRepository)
     public buyRepository: BuyRepository,
-  ) {}
+  ) { }
 
   @post('/buys')
   @response(200, {
@@ -210,6 +210,7 @@ export class BuyController {
 
     const browser = await puppeteer.launch({
       headless: true,
+      executablePath: '/usr/bin/chromium',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
