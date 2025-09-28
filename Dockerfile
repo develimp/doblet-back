@@ -1,40 +1,35 @@
-# Check out https://hub.docker.com/_/node to select a new base image
-FROM node:18-slim
+# Use the official Puppeteer image as a base
+FROM ghcr.io/puppeteer/puppeteer:24.4.0
 
-# Install dependencies for Puppeteer
-RUN apt-get update && apt-get install -y \
-    ca-certificates fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 \
-    libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 \
-    libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 \
-    xdg-utils wget curl gnupg libu2f-udev libvulkan1 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Change to root user to install global packages
+USER root
 
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Set to a non-root built-in user `node`
-USER node
+# Be sure to install Chromium (if not included in the base image)
+RUN apt-get update && apt-get install -y chromium \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create app directory (with user `node`)
-RUN mkdir -p /home/node/app
+# Change to a non-root user
+USER pptruser
+WORKDIR /home/pptruser/app
 
-WORKDIR /home/node/app
+# Copy package files
+COPY --chown=pptruser:pptruser package.json pnpm-lock.yaml ./
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY --chown=node:node pnpm-lock.yaml package.json ./
-
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Bundle app source code
-COPY --chown=node:node . .
+# Copy the rest of the application code
+COPY --chown=pptruser:pptruser . .
 
+# Compile the TypeScript code
 RUN pnpm build
 
-# Bind to all network interfaces so that it can be mapped to the host OS
+# Configure environment variables and expose the port
 ENV HOST=0.0.0.0 PORT=3000
-
 EXPOSE ${PORT}
-CMD [ "pnpm", "start" ]
+
+# Start the application
+CMD ["pnpm", "start"]
