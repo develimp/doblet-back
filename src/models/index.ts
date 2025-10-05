@@ -10,3 +10,5 @@ export * from './supplier.model';
 export * from './user-credentials.model';
 export * from './user.model';
 
+export * from './movement.model';
+export * from './balance.model';

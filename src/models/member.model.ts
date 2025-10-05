@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasOne, model, property, hasMany} from '@loopback/repository';
+import {Balance} from './balance.model';
+import {Movement} from './movement.model';
 
 @model({
   settings: {
@@ -63,6 +65,11 @@ export class Member extends Entity {
   })
   email?: string;
 
+  @hasOne(() => Balance, {keyTo: 'memberFk'})
+  balance: Balance;
+
+  @hasMany(() => Movement, {keyTo: 'memberFk'})
+  movements: Movement[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
@@ -75,7 +82,7 @@ export class Member extends Entity {
 }
 
 export interface MemberRelations {
-  // describe navigational properties here
+  balance?: Balance;
 }
 
 export type MemberWithRelations = Member & MemberRelations;
