@@ -10,3 +10,5 @@ export * from './supplier.repository';
 export * from './user-credentials.repository';
 export * from './user.repository';
 
+export * from './movement.repository';
+export * from './balance.repository';
