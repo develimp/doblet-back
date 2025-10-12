@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12pt;
+      margin: 40px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header img {
+      height: 240px;
+    }
+
+    h1 {
+      font-size: 16pt;
+      margin-bottom: 5px;
+    }
+
+    .summary {
+      margin-top: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border: 1px solid #000;
+      padding: 6px 10px;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    .totals {
+      font-weight: bold;
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div>
+      <h1>Rebut de pagament</h1>
+      <p>{{current_date}}</p>
+    </div>
+    {{#if imageBase64}}
+    <img src="{{imageBase64}}" alt="Escut" style="width:100px;height:auto;" />
+    {{/if}}
+  </div>
+
+  <p>
+    {{name}} abona la quantitat de <b>{{total_pay}} €</b>
+  </p>
+  <ul>
+    <li>{{pay_fee}} € en concepte de quota</li>
+    <li>{{pay_lottery}} € en concepte de loteria</li>
+    <li>{{pay_raffle}} € en concepte de rifa</li>
+  </ul>
+
+  <div class="summary">
+    <h3>
+      {{#if individualized}}
+      RESUM DEL PENDENT DE PAGAMENT DE LA FAMÍLIA COMPLETA:
+      {{else}}
+      RESUM DEL PENDENT DE PAGAMENT:
+      {{/if}}
+    </h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Concepte</th>
+          <th>Assignat</th>
+          <th>Pagat</th>
+          <th>Pendent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Quota</td>
+          <td>{{assigned_fee}} €</td>
+          <td>{{payed_fee}} €</td>
+          <td>{{fee_debt}} €</td>
+        </tr>
+        <tr>
+          <td>Loteria</td>
+          <td>{{assigned_lottery}} €</td>
+          <td>{{payed_lottery}} €</td>
+          <td>{{lottery_debt}} €</td>
+        </tr>
+        <tr>
+          <td>Rifa</td>
+          <td>{{assigned_raffle}} €</td>
+          <td>{{payed_raffle}} €</td>
+          <td>{{raffle_debt}} €</td>
+        </tr>
+        <tr class="totals">
+          <td>Totals</td>
+          <td>{{total_assigned}} €</td>
+          <td>{{total_payed}} €</td>
+          <td>{{total_debt}} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
