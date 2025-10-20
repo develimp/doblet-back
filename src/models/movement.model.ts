@@ -49,6 +49,11 @@ export class Movement extends Entity {
   })
   receiptNumber?: number;
 
+  @property({
+    type: 'number',
+  })
+  fallaYearFk?: number;
+
   @belongsTo(() => Member, {name: 'member'})
   memberFk: number;
 

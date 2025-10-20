@@ -14,6 +14,7 @@ import {AuthenticationComponent} from '@loopback/authentication';
 import {JWTAuthenticationComponent} from '@loopback/authentication-jwt';
 
 import {SpDataSource} from './datasources';
+import {MailService} from './services/mail.service';
 import {MyUserService} from './services/my-user-service';
 
 export {ApplicationConfig};
@@ -42,6 +43,9 @@ export class ApiApplication extends BootMixin(
 
     // Bind user service with string literal key to avoid import issues
     this.bind('services.user.service').toClass(MyUserService);
+
+    // Bind mail service
+    this.service(MailService);
 
     this.projectRoot = __dirname;
 
