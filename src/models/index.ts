@@ -12,3 +12,5 @@ export * from './user.model';
 
 export * from './movement.model';
 export * from './balance.model';
+export * from './lottery.model';
+export * from './lottery-name.model';

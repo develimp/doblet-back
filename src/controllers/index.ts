@@ -13,3 +13,5 @@ export * from './direct-debit.controller';
 export * from './movement.controller';
 export * from './balance.controller';
 export * from './member-movement.controller';
+export * from './lottery.controller';
+export * from './lottery-name.controller';
