@@ -19,13 +19,15 @@ import {
   response,
 } from '@loopback/rest';
 import {Balance} from '../models';
-import {BalanceRepository} from '../repositories';
+import {BalanceRepository, MemberRepository} from '../repositories';
 
 @authenticate('jwt')
 export class BalanceController {
   constructor(
     @repository(BalanceRepository)
     public balanceRepository: BalanceRepository,
+    @repository(MemberRepository)
+    public memberRepository: MemberRepository,
   ) { }
 
   @post('/balances')
@@ -148,5 +150,61 @@ export class BalanceController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.balanceRepository.deleteById(id);
+  }
+
+  @get('/balances/family/{familyFk}')
+  @response(200, {
+    description: 'Balance model instance by familyFk',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            feeAssigned: {type: 'number'},
+            feePayed: {type: 'number'},
+            lotteryAssigned: {type: 'number'},
+            lotteryPayed: {type: 'number'},
+            raffleAssigned: {type: 'number'},
+            rafflePayed: {type: 'number'},
+            difference: {type: 'number'},
+          },
+        },
+      },
+    },
+  })
+  async getFamilyBalance(
+    @param.path.number('familyFk') familyFk: number,
+  ): Promise<any> {
+    const members = await this.memberRepository.find({where: {familyFk}});
+
+    if (!members.length) {
+      throw new Error('No members found for the given familyFk');
+    }
+
+    const totals = {
+      feeAssigned: 0,
+      feePayed: 0,
+      lotteryAssigned: 0,
+      lotteryPayed: 0,
+      raffleAssigned: 0,
+      rafflePayed: 0,
+      difference: 0,
+    };
+
+    for (const member of members) {
+      const balance = await this.balanceRepository.findOne({where: {memberFk: member.id}});
+      if (!balance) continue;
+
+      totals.feeAssigned += balance.feeAssigned ?? 0;
+      totals.feePayed += balance.feePayed ?? 0;
+      totals.lotteryAssigned += balance.lotteryAssigned ?? 0;
+      totals.lotteryPayed += balance.lotteryPayed ?? 0;
+      totals.raffleAssigned += balance.raffleAssigned ?? 0;
+      totals.rafflePayed += balance.rafflePayed ?? 0;
+    }
+    totals.difference = (totals.feePayed + totals.lotteryPayed + totals.rafflePayed) -
+      (totals.feeAssigned + totals.lotteryAssigned + totals.raffleAssigned);
+
+    return totals;
   }
 }
