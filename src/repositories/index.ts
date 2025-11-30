@@ -14,3 +14,4 @@ export * from './movement.repository';
 export * from './balance.repository';
 export * from './lottery.repository';
 export * from './lottery-name.repository';
+export * from './falla-year.repository';

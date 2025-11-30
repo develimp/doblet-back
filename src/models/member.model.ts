@@ -1,4 +1,4 @@
-import {Entity, hasOne, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
 import {Balance} from './balance.model';
 import {Movement} from './movement.model';
 
@@ -15,7 +15,7 @@ export class Member extends Entity {
     id: true,
     generated: true,
   })
-  id?: number;
+  id: number;
 
   @property({
     type: 'string',
@@ -64,6 +64,11 @@ export class Member extends Entity {
     type: 'string',
   })
   email?: string;
+
+  @property({
+    type: 'number',
+  })
+  familyFk?: string;
 
   @hasOne(() => Balance, {keyTo: 'memberFk'})
   balance: Balance;

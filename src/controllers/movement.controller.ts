@@ -22,7 +22,7 @@ import {
   RestBindings
 } from '@loopback/rest';
 import {Movement} from '../models';
-import {BalanceRepository, MemberRepository, MovementRepository} from '../repositories';
+import {BalanceRepository, FallaYearRepository, MemberRepository, MovementRepository} from '../repositories';
 import {MailService} from '../services/mail.service';
 import {ReceiptGeneratorService} from '../services/receipt-generator.service';
 
@@ -39,6 +39,8 @@ export class MovementController {
     public memberRepository: MemberRepository,
     @repository(BalanceRepository)
     public balanceRepository: BalanceRepository,
+    @repository(FallaYearRepository)
+    public fallaYearRepository: FallaYearRepository,
   ) { }
 
   @post('/movements')
@@ -190,5 +192,88 @@ export class MovementController {
       pdfBuffer,
     );
     return {message: 'Correu enviat correctament'};
+  }
+
+  @get('/movements/by-member/{memberId}/current')
+  @response(200, {
+    description: 'Movements for a member in the latest FallaYear',
+    content: {'application/json': {schema: {type: 'array', items: {'x-ts-type': Movement}}}},
+  })
+  async findByMemberCurrent(
+    @param.path.number('memberId') memberId: number,
+  ): Promise<Movement[]> {
+    const last = await this.fallaYearRepository.findOne({order: ['code DESC']});
+    if (!last) return [];
+
+    return this.movementRepository.find({
+      where: {
+        memberFk: memberId,
+        fallaYearFk: last.code,
+      },
+      order: ['id DESC'],
+    });
+  }
+
+  @get('/movements/by-family/{familyFk}/current')
+  @response(200, {
+    description: 'Movements for a family in the latest FallaYear',
+    content: {'application/json': {schema: {type: 'array', items: {'x-ts-type': Movement}}}},
+  })
+  async findByFamilyCurrent(
+    @param.path.number('familyFk') familyFk: number,
+  ): Promise<Movement[]> {
+    const last = await this.fallaYearRepository.findOne({order: ['code DESC']});
+    if (!last) return [];
+
+    const members = await this.memberRepository.find({where: {familyFk}});
+    const memberIds = members.map(m => m.id).filter(id => id !== undefined) as number[];
+
+    if (memberIds.length === 0) {
+      return [];
+    }
+
+    return this.movementRepository.find({
+      where: {
+        memberFk: {inq: memberIds},
+        fallaYearFk: last.code,
+      },
+      order: ['id DESC'],
+    });
+  }
+
+  @post('/family-payment')
+  @response(200, {
+    description: 'Register a family payment and create movements for each member',
+    content: {'application/json': {schema: {message: 'string'}}},
+  })
+  async registerFamilyPayment(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            required: ['familyFk', 'amount', 'idConcept', 'payMethod'],
+            properties: {
+              familyFk: {type: 'number'},
+              amount: {type: 'number'},
+              idConcept: {type: 'number'},
+              payMethod: {type: 'string'},
+            },
+          },
+        },
+      },
+    })
+    body: {
+      familyFk: number; amount: number; idConcept: number; payMethod: 'cash' | 'bank';
+    },
+  ): Promise<object> {
+    const {familyFk, amount, idConcept, payMethod} = body;
+
+    await this.movementRepository.dataSource.execute(
+      'CALL RegisterFamilyPayment(?, ?, ?, ?)',
+      [familyFk, amount, idConcept, payMethod]
+    );
+
+    return {message: 'Pagament familiar registrat correctament'};
   }
 }

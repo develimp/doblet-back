@@ -1,4 +1,5 @@
 import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {FallaYear} from './falla-year.model';
 import {Member} from './member.model';
 
 @model({
@@ -49,13 +50,11 @@ export class Movement extends Entity {
   })
   receiptNumber?: number;
 
-  @property({
-    type: 'number',
-  })
-  fallaYearFk?: number;
-
   @belongsTo(() => Member, {name: 'member'})
   memberFk: number;
+
+  @belongsTo(() => FallaYear, {name: 'fallaYear'})
+  fallaYearFk: number;
 
   // Define well-known properties here
 
