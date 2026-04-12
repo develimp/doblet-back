@@ -1,4 +1,5 @@
 import {authenticate} from '@loopback/authentication';
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,6 +19,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import {SpDataSource} from '../datasources';
 import {FallaYear} from '../models';
 import {FallaYearRepository} from '../repositories';
 
@@ -26,6 +28,7 @@ export class FallaYearController {
   constructor(
     @repository(FallaYearRepository)
     public fallaYearRepository: FallaYearRepository,
+    @inject('datasources.sp') private dataSource: SpDataSource,
   ) { }
 
   @post('/falla-years')
@@ -148,5 +151,19 @@ export class FallaYearController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.fallaYearRepository.deleteById(id);
+  }
+
+  @post('/falla-years/change-year')
+  @response(200, {
+    description: 'Close current falla year and create the next one',
+  })
+  async changeFallaYear(): Promise<any> {
+    const sql = `CALL changeFallaYear()`;
+    const result = await this.dataSource.execute(sql);
+
+    return {
+      message: 'Falla year changed successfully',
+      result,
+    };
   }
 }
