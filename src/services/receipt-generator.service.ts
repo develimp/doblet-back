@@ -106,11 +106,13 @@ export class ReceiptGeneratorService {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
-    const page = await browser.newPage();
-    await page.setContent(html, {waitUntil: 'networkidle0'});
-    const pdfData = await page.pdf({format: 'A4'});
-    await browser.close();
-
-    return Buffer.from(pdfData);
+    try {
+      const page = await browser.newPage();
+      await page.setContent(html, {waitUntil: 'networkidle0'});
+      const pdfData = await page.pdf({format: 'A4'});
+      return Buffer.from(pdfData);
+    } finally {
+      await browser.close();
+    }
   }
 }
