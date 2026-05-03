@@ -200,7 +200,7 @@ export class BuyController {
       if (fsSync.existsSync(devPath)) {
         templatePath = devPath;
       } else {
-        throw new Error('No se encontró la plantilla buy-list.hbs');
+        throw new Error('No s\'ha trobat la plantilla buy-list.hbs');
       }
     }
 

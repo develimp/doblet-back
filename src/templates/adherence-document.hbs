@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document d’Adhesió - Falla Sants Patrons</title>
+
+  <style>
+    @page {
+      size: A4;
+      margin: 1cm;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin-top: 25px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .section {
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    .field {
+      display: flex;
+      margin-bottom: 8px;
+    }
+
+    .field label {
+      width: 200px;
+      font-weight: bold;
+    }
+
+    .field input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 3px;
+    }
+
+    .qr {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .qr img {
+      width: 80px;
+    }
+
+    .signatures {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signature-box {
+      width: 45%;
+      text-align: center;
+    }
+
+    .signature-line {
+      margin-top: 40px;
+      border-top: 1px solid #ccc;
+      padding-top: 5px;
+      font-size: 11px;
+    }
+
+    .footer {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header">
+      {{#if imageBase64}}
+      <img src="{{imageBase64}}" class="logo">
+      {{/if}}
+      <h1>DOCUMENT D’ADHESIÓ I CONDICIONS<br>FALLA SANTS PATRONS</h1>
+    </div>
+
+    <!-- 1 -->
+
+    <div class="section">
+      <h2>1. DADES DEL NOU MEMBRE</h2>
+
+      <div class="field"><label>Nom i cognoms:</label><input type="text"></div>
+      <div class="field"><label>DNI:</label><input type="text"></div>
+      <div class="field"><label>Adreça:</label><input type="text"></div>
+      <div class="field"><label>Data de naixement:</label><input type="text"></div>
+      <div class="field"><label>Telèfon:</label><input type="text"></div>
+      <div class="field"><label>E-mail:</label><input type="text"></div>
+
+    </div>
+
+    <!-- 2 -->
+
+    <div class="section">
+      <h2>2. OBJECTE</h2>
+      <p>
+        El present document regula les condicions d’alta i permanència com a membre de la falla Sants Patrons, així com
+        els drets i obligacions derivats de dita condició.
+      </p>
+    </div>
+
+    <!-- 3 -->
+
+    <div class="section">
+      <h2>3. CONDICIONS ECONÒMIQUES</h2>
+      <p>
+        El membre es compromet al pagament de les quotes establides per la falla. La falla es reserva l’opció d’aplicar
+        un recàrrec del 5% sobre el deute de la quota en cadascún dels trimestres (30 de juny, 30 de setembre, 31 de
+        desembre) en cas de no dur el pagament al dia.
+      </p>
+      <p>
+        La forma de pagament pot ser en efectiu en horari d’oficina, per transferència al compte de l’associació o
+        domiciliant la quota efectuat-se el càrrec a principi de cada mes.
+      </p>
+      <p>
+        S’estableix un descompte per pagament adelantat del 5% del total de la quota si el pagament es fa efectiu abans
+        del 30 de juny.
+      </p>
+      <p>
+        Per altra banda, s’estableix també un 5% de descompte en cadascuna de les quotes d’una família amb tres membres
+        familiars directes (tal i com indica el llibre de família) i un 10% a partir de quatre membres.
+      </p>
+      <p>
+        A més de les quotes, a partir de la categoria de cadet, s’estableixen tres rifes obligatòries amb un preu de 15€
+        cadascuna. Les dates d’aquestes rifes s’informen a través dels canals oficials amb la suficient antelació per si
+        algun membre vol tindre la rifa físicament per a poder-la vendre.
+      </p>
+      <p>
+        El premi de la rifa correspon a la xifra que s’indica a les paperetes per al primer i segon premi coincident amb
+        el sorteig de la loteria nacional esmentat en la mateixa papereta. Qualsevol altre premi quedarà destinat a la
+        falla.
+      </p>
+      <p>
+        En cas d’eixir algun d'aquests dos premis, la falla repartirà els premis tal i com s’indica a les paperetes a
+        tots aquells fallers censats amb l’obligació de pagar rifa, per tant, no es necessari arreplegar les paperetes
+        si no es te la intenció de vendre-les.
+      </p>
+    </div>
+
+    <!-- 4 -->
+
+    <div class="section">
+      <h2>4. DURACIÓ I RENOVACIÓ</h2>
+      <p>
+        La condició de membre tindrà una duració corresponent a l’exercici faller vigent. La renovació serà automàtica a
+        l’inici de cada exercici, excepte comunicació expresa de baixa en els terminis establerts.
+      </p>
+    </div>
+
+    <!-- 5 -->
+
+    <div class="section">
+      <h2>5. BAIXA DEL MEMBRE</h2>
+      <p>
+        El membre podrà sol·licitar la baixa oficialment de forma presencial a l’horari d’oficina, per comunicació
+        directa via whatsapp amb l’encarregat d’altes i baixes o per correu electrònic a tresoreria@santspatrons.com.
+      </p>
+      <p>
+        El termini per a la baixa gratuïta s’estableix des del principi d’exercici fins al 30 de juny. A partir
+        d’aquesta data, per a tramitar la baixa, s’haurà d’estar al corrent de pagament amb l’associació, abonant la
+        part corresponent a cada mes a partir de l’inici d’exercici (abril) fins a la data en que vol gestionar-se la
+        baixa a més de l’import de les rifes que ja s’hagen produït.
+        Per exemple, si un membre vol borrar-se a data 15 de setembre, haurà de satisfer la part corresponent a sis
+        mensualitats de la quota total establerta.
+      </p>
+    </div>
+
+    <!-- 6 -->
+
+    <div class="section">
+      <h2>6. CANALS DE COMUNICACIÓ</h2>
+      <p>
+        La falla utilitzarà els següents canals per a informar els seus membres:
+      <ul>
+        <li>Reunions físiques dels membres.</li>
+        <li>Canal de whatsapp oficial de la falla en el que es pot donar d’alta de forma automàtica escanejant el
+          següent QR.</li>
+      </ul>
+      </p>
+
+      <div class="qr">
+        {{#if qrBase64}}
+        <img src="{{qrBase64}}">
+        {{/if}}
+      </div>
+
+    </div>
+
+    <!-- 7 -->
+
+    <div class="section">
+      <h2>7. DRETS I OBLIGACIONS</h2>
+
+      <p><b>Drets:</b></p>
+      <ul>
+        <li>Participar en les activitats organitzades per la falla.</li>
+        <li>Rebre informació sobre events, pagaments i decisions rellevants pels canals abans esmentats.</li>
+      </ul>
+
+      <p><b>Obligacions:</b></p>
+      <ul>
+        <li>Complir amb els pagaments establerts.</li>
+        <li>Respectar les normes internes i els acords de la junta directiva.</li>
+        <li>Mantenir un comportament adequat dins de les activitats de la falla.</li>
+        <li>Els menors no poden beure alcohol i, es per això, que el pare, mare o tutor haurà de signar el document
+          annexe d’exempció de responsabilitats de la falla per un comportament negligent del menor en qüestió.</li>
+      </ul>
+
+    </div>
+
+    <!-- 8 -->
+
+    <div class="section">
+      <h2>8. PROTECCIÓ DE DADES</h2>
+      <p>
+        Les dades personals seran tractades per la falla amb la finalitat de gestionar la relació amb el membre.
+      </p>
+      <p>
+        El membre podrà exercir els seus drets d’accés, rectificació i supressió mitjançant sol·licitud a
+        tresoreria@santspatrons.com, físicament en horari d’oficina o a través del whatsapp de la persona encarregada
+        d’aquesta gestió.
+      </p>
+    </div>
+
+    <!-- 9 -->
+
+    <div class="section">
+      <h2>9. ACCEPTACIÓ</h2>
+      <p>
+        El firmant declara haver llegit, entés i acceptat totes les condicions recollides en aquest document. <br><b>El
+          desconeixement d’aquestes normes no eximeix del seu compliment.</b>
+      </p>
+    </div>
+
+    <div class="footer">
+      Alzira, a ________ de ________________________________ de ________________
+    </div>
+
+    <div class="signatures">
+      <div class="signature-box">
+        <div class="signature-line">Nom complet i signatura del membre o tutor legal</div>
+      </div>
+
+      <div class="signature-box">
+        <div class="signature-line">Segell de la falla</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

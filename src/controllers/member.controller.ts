@@ -18,7 +18,14 @@ import {
   put,
   requestBody,
   response,
+  Response,
+  RestBindings,
 } from '@loopback/rest';
+import fsSync from 'fs';
+import * as fs from 'fs/promises';
+import handlebars from 'handlebars';
+import * as path from 'path';
+import puppeteer from 'puppeteer';
 import {SpDataSource} from '../datasources';
 import {Member} from '../models';
 import {MemberRepository} from '../repositories';
@@ -173,5 +180,66 @@ export class MemberController {
     const sql = `CALL registerAllDirectDebitPayments(?, ?)`;
     const result = await this.dataSource.execute(sql, [body.date, body.note]);
     return result;
+  }
+
+  @get('/members/pdf')
+  @response(200, {
+    description: 'PDF generated successfully',
+    content: {'application/pdf': {schema: {type: 'string', format: 'binary'}}},
+  })
+  async generateAdherencePdf(
+    @inject(RestBindings.Http.RESPONSE) res: Response,
+  ): Promise<void> {
+    let templatePath = path.join(
+      process.cwd(),
+      'dist',
+      'templates',
+      'adherence-document.hbs',
+    );
+    if (!fsSync.existsSync(templatePath)) {
+      const devPath = path.join(
+        process.cwd(),
+        'templates',
+        'adherence-document.hbs',
+      );
+      if (fsSync.existsSync(devPath)) {
+        templatePath = devPath;
+      } else {
+        throw new Error('No s\'ha trobat la plantilla adherence-document.hbs');
+      }
+    }
+
+    const templateContent = await fs.readFile(templatePath, 'utf-8');
+    const templateDir = path.dirname(templatePath);
+    const imagesDir = path.join(templateDir, 'images');
+    const logoPath = path.join(imagesDir, 'escut.png');
+    const qrPath = path.join(imagesDir, 'qr.jpg');
+    const imageBase64 = fsSync.existsSync(logoPath)
+      ? `data:image/png;base64,${(await fs.readFile(logoPath)).toString('base64')}`
+      : null;
+    const qrBase64 = fsSync.existsSync(qrPath)
+      ? `data:image/jpeg;base64,${(await fs.readFile(qrPath)).toString('base64')}`
+      : null;
+    const template = handlebars.compile(templateContent);
+    const html = template({
+      imageBase64,
+      qrBase64,
+    });
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: '/usr/bin/chromium',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const page = await browser.newPage();
+    await page.setContent(html, {waitUntil: 'networkidle0'});
+
+    const pdf = await page.pdf({format: 'A4'});
+    await browser.close();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="adherence-document.pdf"');
+    res.end(pdf);
   }
 }
