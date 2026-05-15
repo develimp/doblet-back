@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Autorització de Menors - Falla Sants Patrons</title>
+
+  <style>
+    @page {
+      size: A4;
+      margin: 1cm;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin-top: 25px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .section {
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    .field {
+      display: flex;
+      margin-bottom: 8px;
+    }
+
+    .field label {
+      width: 200px;
+      font-weight: bold;
+    }
+
+    .field input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 3px;
+    }
+
+    .signatures {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signature-box {
+      width: 45%;
+      text-align: center;
+    }
+
+    .signature-line {
+      margin-top: 40px;
+      border-top: 1px solid #ccc;
+      padding-top: 5px;
+      font-size: 11px;
+    }
+
+    .footer {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      {{#if imageBase64}}
+      <img src="{{imageBase64}}" class="logo">
+      {{/if}}
+      <h1>AUTORITZACIÓ DE MENORS A EVENTS<br>FALLA SANTS PATRONS</h1>
+    </div>
+
+    <div class="section">
+      <h2>1. DADES DEL MEMBRE MENOR D'EDAT</h2>
+
+      <div class="field"><label>Nom i cognoms:</label><input type="text"></div>
+      <div class="field"><label>Data de naixement:</label><input type="text"></div>
+
+    </div>
+
+    <div class="section">
+      <h2>2. DADES DEL PARE, MARE O TUTOR LEGAL</h2>
+
+      <div class="field"><label>Nom i cognoms:</label><input type="text"></div>
+      <div class="field"><label>DNI:</label><input type="text"></div>
+      <div class="field"><label>Telèfon de contacte:</label><input type="text"></div>
+
+    </div>
+
+    <div class="section">
+      <h2>3. DADES DEL RESPONSABLE EN CAS DE QUE EL TUTOR LEGAL NO SIGA FALLER</h2>
+
+      <div class="field"><label>Nom i cognoms:</label><input type="text"></div>
+      <div class="field"><label>DNI:</label><input type="text"></div>
+      <div class="field"><label>Telèfon de contacte:</label><input type="text"></div>
+
+    </div>
+
+    <div class="section">
+      <p>
+        A través d'aquest document autoritze al fet que el/la menor esmentat/a accedisca als
+        esdeveniments organitzats per l'Associació cultural Falla Sants Patrons d'Alzira tant en la seva
+        seu festera, com en locals o establiments habilitats per a organització d'esdeveniments o
+        els llocs on decidira l'organització de l'associació per a celebrar l'esdeveniment.
+      </p>
+      <p>
+        I assumisc tota responsabilitat del menor, comprometent-me a explicar i fer entendre
+        al menor la normativa vigent a nivell d'espectacles públics, consum d'alcohol i
+        substàncies estupefaents i ordenances municipals, eximint de qualsevol responsabilitat
+        a l'Associació cultural falla Sants Patrons de l'incompliment per part del menor d'alguna
+        de les normatives abans descrites; així mateix em faig responsable pels danys i / o
+        perjudicis que el menor poguera patir durant la seua estada en l'esdeveniment, a més de
+        proclamar-se com a únic/a responsable dels danys i perjudicis que poguera aquest ocasionar.
+      </p>
+    </div>
+    <div class="section">
+      <h2>4. PROTECCIÓ DE DADES</h2>
+      <p>
+        Les dades personals facilitades seran utilitzades únicament per a la gestió de les activitats.
+      </p>
+      <p>
+        El responsable de les dades és l'Associació cultural Falla Sants Patrons de l'Alzira, amb domicili
+        al carrer Felip II, 46, 46600, Alzira, València, amb CIF G96235197.
+      </p>
+      <p>
+        El membre podrà exercir els seus drets d’accés, rectificació i supressió mitjançant sol·licitud a
+        tresoreria@santspatrons.com, físicament en horari d’oficina o a través del whatsapp de la persona encarregada
+        d’aquesta gestió.
+      </p>
+    </div>
+    <div class="page-break"></div>
+    <div class="section">
+      <h2>5. AUTORITZACIÓ DE REALITZACIÓ I ÚS D'IMATGES I VIDEO</h2>
+      <p>
+        Així mateix, amb la signatura d'aquesta autorització, habilite a l'Associació a realitzar fotografies
+        i vídeos amb la finalitat de documentar les activitats realitzades en els esdeveniments organitzats
+        per la mateixa així com a la publicació del material fotogràfic i audiovisual per a l'elaboració
+        de les publicacions de l'Associació en les diferents xarxes socials de les quals
+        aquesta és propietària així com els documents escrits que es realitzen per a la memòria dels
+        actes realitzats com ara el llibret de la falla, tríptics, cartells publicitaris, altres
+        documents i per a mostrar l'activitat en els mitjans que l'Associació considere
+        oportuns, cedint tots els drets d'imatge i reproducció en què es recapta la
+        imatge del meu fill/a.
+      </p>
+      <p>
+        Segons allò que s'ha fixat en la Llei orgànica 1/1982, de 5 de maig, de Protecció civil del dret
+        a l'honor, a la intimitat personal i familiar i a la pròpia imatge i en la normativa
+        de protecció de dades, l'Associació cultural Falla Sants Patrons d'Alzira sol·licita el
+        consentiment de pares o tutors legals per a poder publicar imatges en les quals
+        aparega, individualment o en grup, el seu fill/a menor d'edat, en les activitats realitzades
+        o organitzades per aquesta. Per a la comunicació d'imatges de menors a terceres
+        persones és necessària l'autorització de tots dos progenitors, per la qual cosa, en el cas que
+        autoritze, confirma que posseeix el consentiment de l'altre membre i que li ha traslladat tota
+        la informació que consta en l'imprés.
+      </p>
+      <p>
+        I, per deixar-ne constància, signe la present autorització per a l'assistència del menor als
+        esdeveniments organitzats per l'Associació.
+      </p>
+    </div>
+
+    <div class="footer">
+      Alzira, a ________ de ________________________________ de ________________
+    </div>
+
+    <div class="signatures">
+      <div class="signature-box">
+        <div class="signature-line">Nom complet i signatura del membre o tutor legal</div>
+      </div>
+
+      <div class="signature-box">
+        <div class="signature-line">
+          Nom complet i signatura del responsable en cas de que el tutor legal no siga faller
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

@@ -182,7 +182,7 @@ export class MemberController {
     return result;
   }
 
-  @get('/members/pdf')
+  @get('/members/adherence-pdf')
   @response(200, {
     description: 'PDF generated successfully',
     content: {'application/pdf': {schema: {type: 'string', format: 'binary'}}},
@@ -240,6 +240,62 @@ export class MemberController {
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'inline; filename="adherence-document.pdf"');
+    res.end(pdf);
+  }
+
+  @get('/members/authorization-pdf')
+  @response(200, {
+    description: 'PDF generated successfully',
+    content: {'application/pdf': {schema: {type: 'string', format: 'binary'}}},
+  })
+  async generateAuthorizationPdf(
+    @inject(RestBindings.Http.RESPONSE) res: Response,
+  ): Promise<void> {
+    let templatePath = path.join(
+      process.cwd(),
+      'dist',
+      'templates',
+      'minors-authorization.hbs',
+    );
+    if (!fsSync.existsSync(templatePath)) {
+      const devPath = path.join(
+        process.cwd(),
+        'templates',
+        'minors-authorization.hbs',
+      );
+      if (fsSync.existsSync(devPath)) {
+        templatePath = devPath;
+      } else {
+        throw new Error('No s\'ha trobat la plantilla minors-authorization.hbs');
+      }
+    }
+
+    const templateContent = await fs.readFile(templatePath, 'utf-8');
+    const templateDir = path.dirname(templatePath);
+    const imagesDir = path.join(templateDir, 'images');
+    const logoPath = path.join(imagesDir, 'escut.png');
+    const imageBase64 = fsSync.existsSync(logoPath)
+      ? `data:image/png;base64,${(await fs.readFile(logoPath)).toString('base64')}`
+      : null;
+    const template = handlebars.compile(templateContent);
+    const html = template({
+      imageBase64,
+    });
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: '/usr/bin/chromium',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const page = await browser.newPage();
+    await page.setContent(html, {waitUntil: 'networkidle0'});
+
+    const pdf = await page.pdf({format: 'A4'});
+    await browser.close();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="minors-authorization.pdf"');
     res.end(pdf);
   }
 }
