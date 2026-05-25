@@ -16,10 +16,10 @@ USER pptruser
 WORKDIR /home/pptruser/app
 
 # Copy package files
-COPY --chown=pptruser:pptruser package.json pnpm-lock.yaml ./
+COPY --chown=pptruser:pptruser package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy the rest of the application code
 COPY --chown=pptruser:pptruser . .
