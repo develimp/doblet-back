@@ -1,0 +1,15 @@
+packages:
+  - "."
+
+overrides:
+  minimatch: ">=9.0.5"
+  picomatch: ">=4.0.2"
+  lodash: ">=4.17.21"
+  fast-uri: ">=3.0.6"
+  serialize-javascript: ">=6.0.2"
+  undici: ">=6.21.1"
+  "@loopback/security": "0.12.2"
+
+onlyBuiltDependencies:
+  - puppeteer
+  - "@scarf/scarf"
