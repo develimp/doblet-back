@@ -166,4 +166,27 @@ export class FallaYearController {
       result,
     };
   }
+
+  @get('/falla-years/current')
+  @response(200, {
+    description: 'Current falla year',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            code: { type: 'number' },
+          },
+        },
+      },
+    },
+  })
+  async getCurrentFallaYear(): Promise<{ code: number | null }> {
+    const sql = `SELECT sp.getCurrentFallaYear() AS code`;
+    const result: any = await this.dataSource.execute(sql);
+
+    return {
+      code: result[0]?.code ?? null,
+    };
+  }
 }
