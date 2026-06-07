@@ -41,6 +41,13 @@ DB_PASSWORD=
 DB_NAME=
 ```
 
+## 🗄️ Database
+
+This project includes a `db` folder containing:
+- a main script that creates the database and all tables
+- a `triggers` subfolder with the required triggers
+- a `procedures` subfolder with stored procedures
+
 ## ▶️ Running the application
 
 ### Development (uses .env.local):
