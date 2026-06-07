@@ -1,0 +1,325 @@
+CREATE DATABASE IF NOT EXISTS sp;
+USE sp;
+
+CREATE TABLE IF NOT EXISTS category(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fee DECIMAL(10, 2) NOT NULL,
+	name VARCHAR(10) DEFAULT NULL,
+	description VARCHAR(50) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS family(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	discount DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS member(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	surname VARCHAR(100) NOT NULL,
+	birthdate DATE NOT NULL,
+	gender ENUM('M', 'F') DEFAULT NULL,
+	dni VARCHAR(10) DEFAULT NULL,
+	address VARCHAR(100) DEFAULT NULL,
+	phoneNumber VARCHAR(15) DEFAULT NULL,
+	isRegistered TINYINT(1) DEFAULT NULL,
+	familyFk INT NOT NULL,
+	categoryFk INT NOT NULL,
+	email VARCHAR(50) DEFAULT NULL,
+	directDebitFk INT DEFAULT NULL,
+	CONSTRAINT member_family_FK FOREIGN KEY(familyFk) REFERENCES family(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT member_category_FK FOREIGN KEY(categoryFk) REFERENCES category(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT member_directDebit_FK FOREIGN KEY(directDebitFk) REFERENCES directDebit(id)
+		ON DELETE SET NULL
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS fallaYear(
+	code INT PRIMARY KEY,
+	created DATE DEFAULT NULL,
+	finished DATE DEFAULT NULL,
+	finalCash DECIMAL(10, 2) DEFAULT NULL,
+	finalBank DECIMAL(10, 2) DEFAULT NULL,
+	finalStock DECIMAL(10, 2) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS movement(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	transactionDate DATE NOT NULL DEFAULT CURDATE(),
+	amount DECIMAL(10, 2) NOT NULL,
+	idType INT NOT NULL,
+	idConcept INT NOT NULL,
+	fallaYearFk INT NOT NULL,
+	memberFk INT NOT NULL,
+	description VARCHAR(100) DEFAULT NULL,
+	receiptNumber INT DEFAULT NULL,
+	CONSTRAINT movement_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT movement_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS membershipHistory(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fallaYearFk INT NOT NULL,
+	position VARCHAR(30) NOT NULL,
+	falla VARCHAR(50) NOT NULL,
+	memberFk INT NOT NULL,
+	CONSTRAINT membershipHistory_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT membershipHistory_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS summaryMembersFallaYear(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fallaYearFk INT NOT NULL,
+	memberFk INT NOT NULL,
+	assignedFee DECIMAL(10, 2) NOT NULL,
+	assignedLottery DECIMAL(10, 2) NOT NULL,
+	assignedRaffle DECIMAL(10, 2) NOT NULL,
+	payedFee DECIMAL(10, 2) NOT NULL,
+	payedLottery DECIMAL(10, 2) NOT NULL,
+	payedRaffle DECIMAL(10, 2) NOT NULL,
+	difference DECIMAL(10, 2) AS (
+		assignedFee + assignedLottery + assignedRaffle - 
+		(payedFee + payedLottery + payedRaffle)
+	) VIRTUAL,
+	CONSTRAINT summaryMembersFallaYear_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT summaryMembersFallaYear_member_FK FOREIGN KEY(memberFk)
+	REFERENCES member(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lotteryName(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	description VARCHAR(30) NOT NULL,
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT lotteryName_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lottery(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	lotteryId INT NOT NULL,
+	assigned DATE DEFAULT CURDATE(),
+	memberFk INT NOT NULL,
+	ticketsMale INT DEFAULT NULL,
+	ticketsFemale INT DEFAULT NULL,
+	ticketsChildish INT DEFAULT NULL,
+	tenthsMale INT DEFAULT NULL,
+	tenthsFemale INT DEFAULT NULL,
+	tenthsChildish INT DEFAULT NULL,
+	isAssigned TINYINT(1) DEFAULT 0,
+	price DECIMAL(10, 2) AS (
+		(ticketsMale * 4) + (ticketsFemale * 4) + (ticketsChildish * 4) +
+		(tenthsMale * 20) + (tenthsFemale * 20) + (tenthsChildish * 20)
+	) VIRTUAL,
+	benefit DECIMAL(10, 2) AS (
+		ticketsMale + ticketsFemale + ticketsChildish +
+		(tenthsMale * 3) + (tenthsFemale * 3) + (tenthsChildish * 3)
+	) VIRTUAL,
+	lotteryNameFk INT NOT NULL,
+	UNIQUE KEY `uniq_lottery_lotteryNameFk_lotteryId` (`lotteryNameFk`,`lotteryId`),
+	CONSTRAINT lottery_lotteryName_FK FOREIGN KEY(lotteryNameFk) REFERENCES lotteryName(id)
+		ON UPDATE CASCADE,
+	CONSTRAINT lottery_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS balance(
+	memberFk INT PRIMARY KEY,
+	feeAssigned DECIMAL(10, 2) NOT NULL,
+	feePayed DECIMAL(10, 2) NOT NULL,
+	lotteryAssigned DECIMAL(10, 2) NOT NULL,
+	lotteryPayed DECIMAL(10, 2) NOT NULL,
+	raffleAssigned DECIMAL(10, 2) NOT NULL,
+	rafflePayed DECIMAL(10, 2) NOT NULL,
+	CONSTRAINT balance_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS partner(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	memberFk INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	surname VARCHAR(100) NOT NULL,
+	birthdate DATE NOT NULL,
+	dni VARCHAR(10) NOT NULL,
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT partner_member_FK FOREIGN KEY(memberFk) REFERENCES member(id),
+	CONSTRAINT partner_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS worker(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	surname VARCHAR(100) NOT NULL,
+	dni VARCHAR(10),
+	job VARCHAR(50),
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT worker_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS supplier(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	nif VARCHAR(10) DEFAULT NULL,
+	address VARCHAR(100) DEFAULT NULL,
+	phoneNumber VARCHAR(15) DEFAULT NULL,
+	email VARCHAR(50) DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS supplierAccount(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	accountNumber VARCHAR(24) NOT NULL,
+	supplierFk INT NOT NULL,
+	CONSTRAINT supplierAccount_supplier_FK FOREIGN KEY(supplierFk) REFERENCES supplier(id)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS budgetItem(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(100) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS subItem(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	budgetItemFk INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(100) NOT NULL,
+	CONSTRAINT subItem_budgetItem_FK FOREIGN KEY(budgetItemFk) REFERENCES budgetItem(id)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS buy(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	subItemFk INT NOT NULL,
+	supplierFk INT NOT NULL,
+	amount DECIMAL(10, 2) NOT NULL,
+	payMethod ENUM('efectiu', 'banc') NOT NULL,
+	ticketReference VARCHAR(30) DEFAULT NULL,
+	buyed DATE DEFAULT CURDATE(),
+	digitizedDocument VARCHAR(30) DEFAULT NULL,
+	created DATE DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL,
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT buy_subItem_FK FOREIGN KEY(subItemFk) REFERENCES subItem(id)
+		ON UPDATE CASCADE,
+	CONSTRAINT buy_supplier_FK FOREIGN KEY(supplierFk) REFERENCES supplier(id)
+		ON UPDATE CASCADE,
+	CONSTRAINT buy_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS memberStatusLog(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	memberFk INT NOT NULL,
+	status TINYINT(1) NOT NULL,
+	created DATE DEFAULT CURDATE(),
+	CONSTRAINT memberStatusLog_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON UPDATE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS client(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	nif VARCHAR(10) DEFAULT NULL,
+	address VARCHAR(100) DEFAULT NULL,
+	phoneNumber VARCHAR(15) DEFAULT NULL,
+	email VARCHAR(50) DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sale(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	subItemFk INT NOT NULL,
+	clientFk INT NOT NULL,
+	amount DECIMAL(10, 2) NOT NULL,
+	payMethod ENUM('efectiu', 'banc') NOT NULL,
+	ticketReference VARCHAR(30) DEFAULT NULL,
+	sold DATE DEFAULT CURDATE(),
+	digitizedDocument VARCHAR(30) DEFAULT NULL,
+	created DATE DEFAULT NULL,
+	description VARCHAR(100) DEFAULT NULL,
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT sale_subItem_FK FOREIGN KEY(subItemFk) REFERENCES subItem(id)
+		ON UPDATE CASCADE,
+	CONSTRAINT sale_client_FK FOREIGN KEY(clientFk) REFERENCES client(id)
+		ON UPDATE CASCADE,
+	CONSTRAINT sale_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `user`(
+	id INT NOT NULL PRIMARY KEY,
+	email VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS cashClosure(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+	openingBalance DECIMAL(10,2) NOT NULL,
+	memberMovements DECIMAL(10,2) NOT NULL,
+	saleMovements DECIMAL(10,2) NOT NULL,
+	buyMovements DECIMAL(10,2) NOT NULL,
+	expectedTotal DECIMAL(10,2) NOT NULL,
+    totalCounted DECIMAL(10,2) NOT NULL,
+    coinsLeft DECIMAL(10,2) NOT NULL,
+    billsRemoved DECIMAL(10,2) NOT NULL,
+    mismatch DECIMAL(10,2) GENERATED ALWAYS AS (totalCounted - expectedTotal) STORED,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT cashClosure_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS directDebit(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	memberFk INT NOT NULL,
+	accountNumber VARCHAR(24) DEFAULT NULL,
+	calculatedAmount DECIMAL(10, 2) DEFAULT NULL,
+	actualAmount DECIMAL(10, 2) NOT NULL,
+	notes VARCHAR(100) DEFAULT NULL,
+	CONSTRAINT directDebit_member_FK FOREIGN KEY(memberFk) REFERENCES member(id)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS budget(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	subItemFk INT NOT NULL,
+	amount DECIMAL(10, 2) NOT NULL,
+	fallaYearFk INT NOT NULL,
+	CONSTRAINT budget_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
+		ON UPDATE CASCADE
+	CONSTRAINT budget_subItem_FK FOREIGN KEY(subItemFk) REFERENCES subItem(id)
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS grafanaUser(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nickname VARCHAR(50) NOT NULL,
+	grafanaId INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS userCredentials(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	password VARCHAR(100) NOT NULL,
+	userFk INT NOT NULL
+);
