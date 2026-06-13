@@ -70,6 +70,12 @@ export class Member extends Entity {
   })
   familyFk?: string;
 
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  isAuthorizationSigned?: boolean;
+
   @hasOne(() => Balance, {keyTo: 'memberFk'})
   balance: Balance;
 
