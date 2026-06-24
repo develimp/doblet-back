@@ -16,3 +16,4 @@ export * from './member-movement.controller';
 export * from './lottery.controller';
 export * from './lottery-name.controller';
 export * from './falla-year.controller';
+export * from './family.controller';

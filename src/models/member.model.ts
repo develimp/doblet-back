@@ -1,5 +1,6 @@
-import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
+import {Entity, belongsTo, hasMany, hasOne, model, property} from '@loopback/repository';
 import {Balance} from './balance.model';
+import {Family} from './family.model';
 import {Movement} from './movement.model';
 
 @model({
@@ -65,10 +66,8 @@ export class Member extends Entity {
   })
   email?: string;
 
-  @property({
-    type: 'number',
-  })
-  familyFk?: string;
+  @belongsTo(() => Family, {name: 'family'})
+  familyFk: number;
 
   @property({
     type: 'boolean',
@@ -94,6 +93,7 @@ export class Member extends Entity {
 
 export interface MemberRelations {
   balance?: Balance;
+  family?: Family;
 }
 
 export type MemberWithRelations = Member & MemberRelations;

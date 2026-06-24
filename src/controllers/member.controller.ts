@@ -22,8 +22,8 @@ import {
   RestBindings,
 } from '@loopback/rest';
 import {SpDataSource} from '../datasources';
-import {Member} from '../models';
-import {MemberRepository} from '../repositories';
+import {Family, Member} from '../models';
+import {FamilyRepository, MemberRepository} from '../repositories';
 import {PdfService} from '../services/pdf.service';
 
 @authenticate('jwt')
@@ -31,6 +31,8 @@ export class MemberController {
   constructor(
     @repository(MemberRepository)
     public memberRepository: MemberRepository,
+    @repository(FamilyRepository)
+    public familyRepository: FamilyRepository,
     @inject('datasources.sp') private dataSource: SpDataSource,
     @inject('services.PdfService') private pdfService: PdfService,
   ) { }
@@ -133,6 +135,22 @@ export class MemberController {
     member: Member,
   ): Promise<void> {
     await this.memberRepository.updateById(id, member);
+  }
+
+  @post('/members/{id}/leave-family')
+  @response(204, {
+    description: 'Member leave family success',
+  })
+  async leaveFamily(
+    @param.path.number('id') id: number,
+  ): Promise<void> {
+    const member = await this.memberRepository.findById(id);
+    if (!member) {
+      throw new Error('Member not found');
+    }
+
+    const newFamily = await this.familyRepository.create({discount: 0});
+    await this.memberRepository.updateById(id, {familyFk: newFamily.id});
   }
 
   @put('/members/{id}')
