@@ -4,13 +4,21 @@ CREATE TRIGGER member_afterUpdate
 AFTER UPDATE
 ON `member` FOR EACH ROW
 BEGIN
+	DECLARE vFallaYearFk INT;
+
+	SET vFallaYearFk = getCurrentFallaYear();
+
 	IF OLD.isRegistered = 0 AND NEW.isRegistered = 1 THEN
 		CALL insertBalance(NEW.id);
+		INSERT INTO membershipHistory (memberFk, fallaYearFk, falla, `position`)
+			VALUES (NEW.id, vFallaYearFk, 'Sants Patrons', 'vocal');
 	END IF;
 	
 	IF OLD.isRegistered = 1 AND NEW.isRegistered = 0 THEN
 		DELETE FROM balance
 			WHERE memberFk = NEW.id;
+		DELETE FROM membershipHistory
+			WHERE memberFk = NEW.id AND fallaYearFk = vFallaYearFk;
 	END IF;
 
 	IF OLD.isRegistered <> NEW.isRegistered THEN
