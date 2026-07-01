@@ -4,7 +4,8 @@ CREATE TRIGGER member_beforeInsert
 BEFORE INSERT
 ON `member` FOR EACH ROW
 BEGIN
-	IF NEW.categoryFk IS NULL THEN
-		SET NEW.categoryFk = sp.calculateMemberCategory(NEW.birthdate, getCurrentFallaYear());
-	END IF;
+	DECLARE vFallaYearFk INT;
+
+	SET vFallaYearFk = getCurrentFallaYear();
+	SET NEW.categoryFk = calculateMemberCategory(NEW.birthdate, vFallaYearFk);
 END
