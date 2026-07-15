@@ -1,5 +1,6 @@
 import {Entity, belongsTo, hasMany, hasOne, model, property} from '@loopback/repository';
 import {Balance} from './balance.model';
+import {Category} from './category.model';
 import {Family} from './family.model';
 import {Movement} from './movement.model';
 
@@ -69,6 +70,14 @@ export class Member extends Entity {
   @belongsTo(() => Family, {name: 'family'})
   familyFk: number;
 
+  @belongsTo(() => Category, {name: 'category'})
+  categoryFk: number;
+
+  @property({
+    type: 'number',
+  })
+  directDebitFk?: number;
+
   @property({
     type: 'boolean',
     default: false,
@@ -94,6 +103,7 @@ export class Member extends Entity {
 export interface MemberRelations {
   balance?: Balance;
   family?: Family;
+  category?: Category;
 }
 
 export type MemberWithRelations = Member & MemberRelations;

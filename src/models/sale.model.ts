@@ -54,6 +54,12 @@ export class Sale extends Entity {
   })
   description?: string;
 
+  @property({
+    type: 'number',
+    required: true,
+  })
+  fallaYearFk: number;
+
   @belongsTo(() => SubItem, {name: 'subItem'})
   subItemFk: number;
 
