@@ -26,7 +26,6 @@ import {Family, Member} from '../models';
 import {FamilyRepository, MemberRepository} from '../repositories';
 import {PdfService} from '../services/pdf.service';
 
-@authenticate('jwt')
 export class MemberController {
   constructor(
     @repository(MemberRepository)
@@ -37,6 +36,7 @@ export class MemberController {
     @inject('services.PdfService') private pdfService: PdfService,
   ) { }
 
+  @authenticate('jwt')
   @post('/members')
   @response(200, {
     description: 'Member model instance',
@@ -67,6 +67,7 @@ export class MemberController {
     return this.memberRepository.count(where);
   }
 
+  @authenticate('jwt')
   @get('/members')
   @response(200, {
     description: 'Array of Member model instances',
@@ -83,6 +84,7 @@ export class MemberController {
     return this.memberRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/members')
   @response(200, {
     description: 'Member PATCH success count',
@@ -102,6 +104,7 @@ export class MemberController {
     return this.memberRepository.updateAll(member, where);
   }
 
+  @authenticate('jwt')
   @get('/members/{id}')
   @response(200, {
     description: 'Member model instance',
@@ -119,6 +122,7 @@ export class MemberController {
     return this.memberRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/members/{id}')
   @response(204, {
     description: 'Member PATCH success',
@@ -137,6 +141,7 @@ export class MemberController {
     await this.memberRepository.updateById(id, member);
   }
 
+  @authenticate('jwt')
   @post('/members/{id}/leave-family')
   @response(204, {
     description: 'Member leave family success',
@@ -153,6 +158,7 @@ export class MemberController {
     await this.memberRepository.updateById(id, {familyFk: newFamily.id});
   }
 
+  @authenticate('jwt')
   @put('/members/{id}')
   @response(204, {
     description: 'Member PUT success',
@@ -164,6 +170,7 @@ export class MemberController {
     await this.memberRepository.replaceById(id, member);
   }
 
+  @authenticate('jwt')
   @del('/members/{id}')
   @response(204, {
     description: 'Member DELETE success',
@@ -172,6 +179,7 @@ export class MemberController {
     await this.memberRepository.deleteById(id);
   }
 
+  @authenticate('jwt')
   @post('/members/register-all-direct-debit-payments')
   async registerAllDirectDebitPayments(
     @requestBody({
@@ -197,6 +205,7 @@ export class MemberController {
     return result;
   }
 
+  @authenticate('jwt')
   @get('/members/adherence-pdf')
   async generateAdherencePdf(
     @inject(RestBindings.Http.RESPONSE) res: Response,
@@ -215,6 +224,7 @@ export class MemberController {
     res.end(pdf);
   }
 
+  @authenticate('jwt')
   @get('/members/authorization-pdf')
   async generateAuthorizationPdf(
     @inject(RestBindings.Http.RESPONSE) res: Response,
@@ -233,6 +243,7 @@ export class MemberController {
     res.end(pdf);
   }
 
+  @authenticate('jwt')
   @get('/members/partner-pdf')
   async generatePartnerPdf(
     @inject(RestBindings.Http.RESPONSE) res: Response,
