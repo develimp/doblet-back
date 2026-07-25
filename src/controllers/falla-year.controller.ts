@@ -23,7 +23,6 @@ import {SpDataSource} from '../datasources';
 import {FallaYear} from '../models';
 import {FallaYearRepository} from '../repositories';
 
-@authenticate('jwt')
 export class FallaYearController {
   constructor(
     @repository(FallaYearRepository)
@@ -31,6 +30,7 @@ export class FallaYearController {
     @inject('datasources.sp') private dataSource: SpDataSource,
   ) { }
 
+  @authenticate('jwt')
   @post('/falla-years')
   @response(200, {
     description: 'FallaYear model instance',
@@ -52,6 +52,7 @@ export class FallaYearController {
     return this.fallaYearRepository.create(fallaYear);
   }
 
+  @authenticate('jwt')
   @get('/falla-years/count')
   @response(200, {
     description: 'FallaYear model count',
@@ -63,6 +64,7 @@ export class FallaYearController {
     return this.fallaYearRepository.count(where);
   }
 
+  @authenticate('jwt')
   @get('/falla-years')
   @response(200, {
     description: 'Array of FallaYear model instances',
@@ -81,6 +83,7 @@ export class FallaYearController {
     return this.fallaYearRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/falla-years')
   @response(200, {
     description: 'FallaYear PATCH success count',
@@ -100,6 +103,7 @@ export class FallaYearController {
     return this.fallaYearRepository.updateAll(fallaYear, where);
   }
 
+  @authenticate('jwt')
   @get('/falla-years/{id}')
   @response(200, {
     description: 'FallaYear model instance',
@@ -116,6 +120,7 @@ export class FallaYearController {
     return this.fallaYearRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/falla-years/{id}')
   @response(204, {
     description: 'FallaYear PATCH success',
@@ -134,6 +139,7 @@ export class FallaYearController {
     await this.fallaYearRepository.updateById(id, fallaYear);
   }
 
+  @authenticate('jwt')
   @put('/falla-years/{id}')
   @response(204, {
     description: 'FallaYear PUT success',
@@ -145,6 +151,7 @@ export class FallaYearController {
     await this.fallaYearRepository.replaceById(id, fallaYear);
   }
 
+  @authenticate('jwt')
   @del('/falla-years/{id}')
   @response(204, {
     description: 'FallaYear DELETE success',
@@ -153,6 +160,7 @@ export class FallaYearController {
     await this.fallaYearRepository.deleteById(id);
   }
 
+  @authenticate('jwt')
   @post('/falla-years/change-year')
   @response(200, {
     description: 'Close current falla year and create the next one',
