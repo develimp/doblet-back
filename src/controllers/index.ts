@@ -17,3 +17,4 @@ export * from './lottery.controller';
 export * from './lottery-name.controller';
 export * from './falla-year.controller';
 export * from './family.controller';
+export * from './event.controller';

@@ -15,3 +15,4 @@ export * from './lottery.repository';
 export * from './lottery-name.repository';
 export * from './falla-year.repository';
 export * from './family.repository';
+export * from './event.repository';
