@@ -324,3 +324,15 @@ CREATE TABLE IF NOT EXISTS userCredentials(
 	password VARCHAR(100) NOT NULL,
 	userFk INT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS event(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(150) NOT NULL,
+	date DATE NOT NULL,
+	time TIME DEFAULT NULL,
+	location VARCHAR(150) DEFAULT NULL,
+	category ENUM('Assemblea', 'Festa', 'Nomenament', 'Presentació', 'Monument', 'Cultura', 'Premi', 'Gastronomia', 'Altres') NOT NULL,
+	description TEXT DEFAULT NULL,
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	INDEX idx_date (date)
+);

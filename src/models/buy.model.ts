@@ -56,7 +56,6 @@ export class Buy extends Entity {
 
   @property({
     type: 'number',
-    required: true,
   })
   fallaYearFk: number;
 
