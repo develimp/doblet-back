@@ -336,3 +336,11 @@ CREATE TABLE IF NOT EXISTS event(
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 	INDEX idx_date (date)
 );
+
+CREATE TABLE IF NOT EXISTS `position` (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fallaYear INT NOT NULL,
+	role ENUM('Fallera Major', 'President', 'Fallera Major Infantil', 'President Infantil') NOT NULL,
+	name VARCHAR(150) NOT NULL,
+	imageKey VARCHAR(255) DEFAULT NULL
+);
