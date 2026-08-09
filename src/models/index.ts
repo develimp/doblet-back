@@ -16,3 +16,4 @@ export * from './lottery-name.model';
 export * from './falla-year.model';
 export * from './family.model';
 export * from './event.model';
+export * from './position.model';
