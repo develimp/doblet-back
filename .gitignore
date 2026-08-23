@@ -54,9 +54,24 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env.local
-.env.production
+# dotenv environment variables files
+.env*
+!.env.example
+
+# Private credentials and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*credentials*
+*secret*
+
+# Local database dumps and backups
+/db/dump/
+*.sql.bak
+*.sql.gz
 
 # Transpiled JavaScript files from Typescript
 /dist
@@ -69,3 +84,5 @@ typings/
 
 # Images for templates
 /src/templates/images/*
+
+# End of ignore rules
