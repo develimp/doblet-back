@@ -344,3 +344,18 @@ CREATE TABLE IF NOT EXISTS `position` (
 	name VARCHAR(150) NOT NULL,
 	imageKey VARCHAR(255) DEFAULT NULL
 );
+
+CREATE TABLE IF NOT EXISTS monument (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fallaYear INT NOT NULL,
+    type ENUM('gran', 'infantil') NOT NULL,
+	section ENUM('única', 'especial', 'primera', 'segona') DEFAULT NULL,
+	awardType ENUM('premi', 'accèssit') DEFAULT NULL,
+	award INT DEFAULT NULL,
+	isCelebrated TINYINT(1) NOT NULL DEFAULT 1,
+    title VARCHAR(150) DEFAULT NULL,
+    artist VARCHAR(150) DEFAULT NULL,
+    description TEXT DEFAULT NULL,
+    imageKey VARCHAR(255) DEFAULT NULL,
+    UNIQUE KEY uniq_monument_fallaYear_type (fallaYear, type)
+);

@@ -28,7 +28,7 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && pnpm run posttest",
     "docker:build": "docker build -t api .",
     "docker:run": "docker run -p 3000:3000 -d api",
-    "back": "docker compose --project-directory . -f docker/docker-compose.yml up loopback",
+    "back": "docker compose --project-directory . -f docker/docker-compose.yml up --build loopback",
     "premigrate": "pnpm run build",
     "migrate": "node ./dist/migrate",
     "db:schema": "docker compose --project-directory . -f docker/docker-compose.yml exec -T mariadb mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < db/schema.sql",

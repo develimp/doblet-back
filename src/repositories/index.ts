@@ -17,3 +17,4 @@ export * from './falla-year.repository';
 export * from './family.repository';
 export * from './event.repository';
 export * from './position.repository';
+export * from './monument.repository';
