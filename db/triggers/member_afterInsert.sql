@@ -8,6 +8,7 @@ BEGIN
 
 	CALL updateFamilyDiscount(NEW.familyFk);
 	CALL insertBalance(NEW.id);
+	CALL regenerateBalance;
 
 	IF NEW.isRegistered = 1 THEN
 		INSERT INTO memberStatusLog(memberFk, status)
