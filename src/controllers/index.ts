@@ -20,3 +20,5 @@ export * from './family.controller';
 export * from './event.controller';
 export * from './position.controller';
 export * from './monument.controller';
+export * from './gallery-album.controller';
+export * from './gallery-photo.controller';

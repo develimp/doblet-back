@@ -353,9 +353,25 @@ CREATE TABLE IF NOT EXISTS monument (
 	awardType ENUM('premi', 'accèssit') DEFAULT NULL,
 	award INT DEFAULT NULL,
 	isCelebrated TINYINT(1) NOT NULL DEFAULT 1,
-    title VARCHAR(150) DEFAULT NULL,
-    artist VARCHAR(150) DEFAULT NULL,
-    description TEXT DEFAULT NULL,
-    imageKey VARCHAR(255) DEFAULT NULL,
-    UNIQUE KEY uniq_monument_fallaYear_type (fallaYear, type)
+	title VARCHAR(150) DEFAULT NULL,
+	artist VARCHAR(150) DEFAULT NULL,
+	description TEXT DEFAULT NULL,
+	imageKey VARCHAR(255) DEFAULT NULL,
+	UNIQUE KEY uniq_monument_fallaYear_type (fallaYear, type)
+);
+
+CREATE TABLE IF NOT EXISTS galleryAlbum (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	category VARCHAR(50) NOT NULL,
+	description TEXT DEFAULT NULL,
+	fallaYear INT NOT NULL,
+	date DATE DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS galleryPhoto (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	albumFk INT NOT NULL,
+	imageKey VARCHAR(255) DEFAULT NULL,
+	CONSTRAINT galleryPhoto_album_FK FOREIGN KEY(albumFk) REFERENCES galleryAlbum(id)
+		ON UPDATE CASCADE
 );

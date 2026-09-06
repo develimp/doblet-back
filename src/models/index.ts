@@ -18,3 +18,5 @@ export * from './family.model';
 export * from './event.model';
 export * from './position.model';
 export * from './monument.model';
+export * from './gallery-album.model';
+export * from './gallery-photo.model';

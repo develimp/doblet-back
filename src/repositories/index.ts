@@ -18,3 +18,5 @@ export * from './family.repository';
 export * from './event.repository';
 export * from './position.repository';
 export * from './monument.repository';
+export * from './gallery-album.repository';
+export * from './gallery-photo.repository';
