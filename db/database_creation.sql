@@ -334,6 +334,7 @@ CREATE TABLE IF NOT EXISTS event(
 	category ENUM('Assemblea', 'Festa', 'Nomenament', 'Presentació', 'Monument', 'Cultura', 'Premi', 'Gastronomia', 'Altres') NOT NULL,
 	description TEXT DEFAULT NULL,
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	imageKey VARCHAR(255) DEFAULT NULL,
 	INDEX idx_date (date)
 );
 

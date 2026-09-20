@@ -54,6 +54,11 @@ export class Event extends Entity {
   })
   created: string;
 
+  @property({
+    type: 'string',
+  })
+  imageKey?: string;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data
