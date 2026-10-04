@@ -59,6 +59,12 @@ export class Event extends Entity {
   })
   imageKey?: string;
 
+  @property({
+    type: 'number',
+    required: true,
+  })
+  fallaYear: number;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

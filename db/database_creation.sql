@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS summaryMembersFallaYear(
 	payedLottery DECIMAL(10, 2) NOT NULL,
 	payedRaffle DECIMAL(10, 2) NOT NULL,
 	difference DECIMAL(10, 2) AS (
-		assignedFee + assignedLottery + assignedRaffle - 
+		assignedFee + assignedLottery + assignedRaffle -
 		(payedFee + payedLottery + payedRaffle)
 	) VIRTUAL,
 	CONSTRAINT summaryMembersFallaYear_fallaYear_FK FOREIGN KEY(fallaYearFk) REFERENCES fallaYear(code)
@@ -335,6 +335,7 @@ CREATE TABLE IF NOT EXISTS event(
 	description TEXT DEFAULT NULL,
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 	imageKey VARCHAR(255) DEFAULT NULL,
+	fallaYear INT NOT NULL,
 	INDEX idx_date (date)
 );
 
