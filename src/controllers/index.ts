@@ -22,3 +22,4 @@ export * from './position.controller';
 export * from './monument.controller';
 export * from './gallery-album.controller';
 export * from './gallery-photo.controller';
+export * from './book.controller';
