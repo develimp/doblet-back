@@ -1,21 +1,23 @@
-import {ApiApplication} from './application';
 import {juggler} from '@loopback/repository';
+import {hash} from 'bcryptjs';
+import {ApiApplication} from './application';
 
 import {
-  FamilyRepository,
-  MemberRepository,
+  BudgetItemRepository,
+  BuyRepository,
+  ClientRepository,
   DirectDebitRepository,
-  BalanceRepository,
-  MovementRepository,
   FallaYearRepository,
+  FamilyRepository,
   LotteryNameRepository,
   LotteryRepository,
-  SupplierRepository,
-  ClientRepository,
-  BudgetItemRepository,
-  SubItemRepository,
-  BuyRepository,
+  MemberRepository,
+  MovementRepository,
   SaleRepository,
+  SubItemRepository,
+  SupplierRepository,
+  UserCredentialsRepository,
+  UserRepository,
 } from './repositories';
 
 export async function seed(args: string[]) {
@@ -34,10 +36,11 @@ export async function seed(args: string[]) {
 }
 
 async function seedData(app: ApiApplication) {
+  const userRepo = await app.getRepository(UserRepository);
+  const userCredentialsRepo = await app.getRepository(UserCredentialsRepository);
   const familyRepo = await app.getRepository(FamilyRepository);
   const memberRepo = await app.getRepository(MemberRepository);
   const directDebitRepo = await app.getRepository(DirectDebitRepository);
-  const balanceRepo = await app.getRepository(BalanceRepository);
   const movementRepo = await app.getRepository(MovementRepository);
   const fallaYearRepo = await app.getRepository(FallaYearRepository);
   const lotteryNameRepo = await app.getRepository(LotteryNameRepository);
@@ -61,6 +64,14 @@ async function seedData(app: ApiApplication) {
   // That's why we create the categories with these explicit IDs: if they don't
   // match, any INSERT into member will fail due to a foreign key, regardless
   // of the category foreign key we pass in create().
+
+  const seededUser = await userRepo.create({
+    email: 'tonystark@santspatrons.com',
+  });
+  await userCredentialsRepo.create({
+    password: await hash('StarkDemo2026!', 10),
+    userFk: seededUser.id,
+  });
 
   const categoriesById: Record<number, {fee: number; name: string; description: string}> = {
     1: {fee: 535, name: 'adult', description: 'major de 18 anys'},
