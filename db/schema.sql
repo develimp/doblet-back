@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19  Distrib 10.5.27-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: sp
@@ -62,7 +62,7 @@ CREATE TABLE `budget` (
   KEY `budget_fallaYear_FK` (`fallaYearFk`),
   CONSTRAINT `budget_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE,
   CONSTRAINT `budget_subItem_FK` FOREIGN KEY (`subItemFk`) REFERENCES `subItem` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `budgetItem` (
   `name` varchar(50) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `buy` (
   CONSTRAINT `buy_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE,
   CONSTRAINT `buy_subItem_FK` FOREIGN KEY (`subItemFk`) REFERENCES `subItem` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `buy_supplier_FK` FOREIGN KEY (`supplierFk`) REFERENCES `supplier` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=643 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `cashClosure` (
   PRIMARY KEY (`id`),
   KEY `cashClosure_fallaYear_FK` (`fallaYearFk`),
   CONSTRAINT `cashClosure_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `category` (
   `name` varchar(10) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +234,7 @@ CREATE TABLE `client` (
   `email` varchar(50) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `directDebit` (
   PRIMARY KEY (`id`),
   KEY `directDebit_member_FK` (`memberFk`),
   CONSTRAINT `directDebit_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,7 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`develimp`@`%`*/ /*!50003 TRIGGER directDebit_beforeInsert
-BEFORE INSERT 
+BEFORE INSERT
 ON directDebit FOR EACH ROW
 BEGIN
   DECLARE existingFk INT;
@@ -336,7 +336,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`develimp`@`%`*/ /*!50003 TRIGGER directDebit_afterDelete
-AFTER DELETE 
+AFTER DELETE
 ON directDebit FOR EACH ROW
 BEGIN
   UPDATE member
@@ -432,7 +432,7 @@ CREATE TABLE `family` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `discount` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -495,7 +495,7 @@ CREATE TABLE `lottery` (
   KEY `lottery_member_FK` (`memberFk`),
   CONSTRAINT `lottery_lotteryName_FK` FOREIGN KEY (`lotteryNameFk`) REFERENCES `lotteryName` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `lottery_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1095 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -521,7 +521,7 @@ CREATE TABLE `lotteryName` (
   PRIMARY KEY (`id`),
   KEY `lotteryName_fallaYear_FK` (`fallaYearFk`),
   CONSTRAINT `lotteryName_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -586,7 +586,7 @@ CREATE TABLE `member` (
   CONSTRAINT `member_category_FK` FOREIGN KEY (`categoryFk`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `member_directDebit_FK` FOREIGN KEY (`directDebitFk`) REFERENCES `directDebit` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `member_family_FK` FOREIGN KEY (`familyFk`) REFERENCES `family` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=687 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -689,7 +689,7 @@ BEGIN
 	DECLARE vFallaYearFk INT;
 
 	SET vFallaYearFk = getCurrentFallaYear();
-	
+
 	IF OLD.isRegistered = 0 AND NEW.isRegistered = 1 THEN
 		CALL insertBalance(NEW.id);
 		INSERT INTO membershipHistory (memberFk, fallaYearFk, falla, `position`)
@@ -702,20 +702,20 @@ BEGIN
 		DELETE FROM membershipHistory
 			WHERE memberFk = NEW.id AND fallaYearFk = vFallaYearFk;
 	END IF;
-	
+
 	IF OLD.isRegistered <> NEW.isRegistered THEN
     	INSERT INTO memberStatusLog(memberFk, status)
     		VALUES (NEW.id, NEW.isRegistered);
 		CALL updateFamilyDiscount(NEW.familyFk);
 		CALL regenerateBalance;
   	END IF;
-	
+
 	IF OLD.familyFk <> NEW.familyFk THEN
 		CALL updateFamilyDiscount(OLD.familyFk);
 		CALL updateFamilyDiscount(NEW.familyFk);
 		CALL regenerateBalance;
 	END IF;
-		
+
 	IF OLD.birthDate <> NEW.birthDate THEN
 		CALL regenerateBalance;
 	END IF;
@@ -741,7 +741,7 @@ CREATE TABLE `memberStatusLog` (
   PRIMARY KEY (`id`),
   KEY `memberStatusLog_member_FK` (`memberFk`),
   CONSTRAINT `memberStatusLog_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -771,7 +771,7 @@ CREATE TABLE `membershipHistory` (
   KEY `membershipHistory_member_FK` (`memberFk`),
   CONSTRAINT `membershipHistory_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `membershipHistory_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3221 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -805,7 +805,7 @@ CREATE TABLE `movement` (
   KEY `movement_fallaYear_FK` (`fallaYearFk`),
   CONSTRAINT `movement_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `movement_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20619 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -840,7 +840,7 @@ BEGIN
 			INTO latestReceipt
 			FROM sp.movement
 			WHERE fallaYearFk = NEW.FallaYearFk;
-	
+
 		SET NEW.receiptNumber = latestReceipt + 1;
 	END IF;
 END */;;
@@ -899,7 +899,7 @@ CREATE TABLE `partner` (
   KEY `partner_member_FK` (`memberFk`),
   CONSTRAINT `partner_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE,
   CONSTRAINT `partner_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -937,7 +937,7 @@ CREATE TABLE `sale` (
   CONSTRAINT `sale_client_FK` FOREIGN KEY (`clientFk`) REFERENCES `client` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `sale_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE,
   CONSTRAINT `sale_subItem_FK` FOREIGN KEY (`subItemFk`) REFERENCES `subItem` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -986,7 +986,7 @@ CREATE TABLE `subItem` (
   PRIMARY KEY (`id`),
   KEY `subItem_budgetItem_FK` (`budgetItemFk`),
   CONSTRAINT `subItem_budgetItem_FK` FOREIGN KEY (`budgetItemFk`) REFERENCES `budgetItem` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1021,7 +1021,7 @@ CREATE TABLE `summaryMembersFallaYear` (
   KEY `summaryMembersFallaYear_member_FK` (`memberFk`),
   CONSTRAINT `summaryMembersFallaYear_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `summaryMembersFallaYear_member_FK` FOREIGN KEY (`memberFk`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2102 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1069,7 +1069,7 @@ CREATE TABLE `supplier` (
   `email` varchar(50) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1095,7 +1095,7 @@ CREATE TABLE `supplierAccount` (
   PRIMARY KEY (`id`),
   KEY `supplierAccount_supplier_FK` (`supplierFk`),
   CONSTRAINT `supplierAccount_supplier_FK` FOREIGN KEY (`supplierFk`) REFERENCES `supplier` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1118,7 +1118,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1142,7 +1142,7 @@ CREATE TABLE `userCredentials` (
   `password` varchar(100) NOT NULL,
   `userFk` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1171,7 +1171,7 @@ CREATE TABLE `worker` (
   PRIMARY KEY (`id`),
   KEY `worker_fallaYear_FK` (`fallaYearFk`),
   CONSTRAINT `worker_fallaYear_FK` FOREIGN KEY (`fallaYearFk`) REFERENCES `fallaYear` (`code`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1210,7 +1210,7 @@ BEGIN
 
     SET vFallaAge = calculateMemberFallaAge(vBirthdateFk, vFallaYearFk);
 
-    CASE 
+    CASE
         WHEN vFallaAge < 5 THEN
             SET vCategoryFk = 5;
         WHEN vFallaAge BETWEEN 5 AND 9 THEN
@@ -1288,7 +1288,7 @@ BEGIN
 		FROM fallaYear
 		ORDER BY code DESC
 		LIMIT 1;
-	
+
 	RETURN vLastFallaYear;
 END ;;
 DELIMITER ;
@@ -1350,7 +1350,7 @@ BEGIN
       VALUES (
         vMemberFk,
         2,
-        1, 
+        1,
         vBenefit,
         CONCAT('benefici ', vDescription, ' ', vFallaYearFk)
       );
@@ -1394,18 +1394,18 @@ BEGIN
 	DECLARE vDay INT;
     DECLARE vMonth INT;
     DECLARE vYear INT;
-   
+
 	SET vDate = NOW();
 	SET vDay = DAY(vDate);
     SET vMonth = MONTH(vDate);
     SET vYear = YEAR(vDate);
-   
+
    	CASE
 	   	WHEN vMonth > 3 THEN
 	   		SET vSelf = vYear + 1;
 	   	WHEN vMonth < 2 THEN
 	   		SET vSelf = vYear;
-	   	WHEN vMonth = 3 AND vDay > 19 THEN 
+	   	WHEN vMonth = 3 AND vDay > 19 THEN
 	   		SET vSelf = vYear + 1;
 	   	WHEN vMonth = 3 AND vDay <= 19 THEN
 	   		SET vSelf = vYear;
@@ -1432,7 +1432,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `calculateMemberCategory`(
 BEGIN
 	DECLARE vFallaAge INT;
 	CALL calculateMemberFallaAge(vBirthdate, vFallaAge);
-	CASE 
+	CASE
 		WHEN vFallaAge < 5 THEN
 			SET vCategoryFk = 5;
 		WHEN vFallaAge >= 5 AND vFallaAge <= 9 THEN
@@ -1489,47 +1489,47 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`develimp`@`%` PROCEDURE `changeFallaYear`()
 BEGIN
-	
+
 	DECLARE vFallaYear INT;
 	DECLARE vNewFallaYear INT;
-	
+
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 	    ROLLBACK;
 	    RESIGNAL;
 	END;
-	
+
 	START TRANSACTION;
-		
+
 	SELECT MAX(code) INTO vFallaYear
 	    FROM fallaYear
 		WHERE finished IS NULL
 		FOR UPDATE;
-	
+
 	IF vFallaYear IS NULL THEN
 	    SIGNAL SQLSTATE '45000'
 	    SET MESSAGE_TEXT = 'No hi ha cap exercici obert';
 	END IF;
-		
+
 	CALL insertSummaryMembersFallaYear(vFallaYear);
-	
+
 	UPDATE fallaYear
 		SET finished = NOW() WHERE code = vFallaYear;
-	
+
 	SET vNewFallaYear = vFallaYear + 1;
-	
-	
+
+
 	IF NOT EXISTS (
 	    SELECT 1 FROM fallaYear WHERE code = vNewFallaYear
 	) THEN
 	    INSERT INTO fallaYear (code, created)
 	    VALUES (vNewFallaYear, NOW());
 	END IF;
-	
+
 	UPDATE member
 	SET categoryFk = calculateMemberCategory(birthDate, vNewFallaYear)
 	WHERE isRegistered;
-	
+
 	INSERT INTO movement (
 	    amount,
 	    idType,
@@ -1548,7 +1548,7 @@ BEGIN
 	FROM summaryMembersFallaYear s
 	WHERE s.fallaYearFk = vFallaYear
 	  AND s.difference <> 0;
-	
+
 	INSERT INTO membershipHistory (
 		fallaYearFk,
 		position,
@@ -1561,9 +1561,9 @@ BEGIN
 		s.memberFk
 	FROM summaryMembersFallaYear s
 	WHERE s.fallaYearFk = vFallaYear;
-	
+
 	CALL regenerateBalance;
-	
+
 	COMMIT;
 END ;;
 DELIMITER ;
@@ -1641,14 +1641,14 @@ BEGIN
 	DECLARE vTotalLotteryPayed DECIMAL(10,2) DEFAULT 0;
 	DECLARE vTotalRaffleAssigned DECIMAL(10,2) DEFAULT 0;
 	DECLARE vTotalRafflePayed DECIMAL(10,2) DEFAULT 0;
-	
+
 	CALL getCurrentFallaYear(vFallaYearFk);
-	
+
 	SELECT fee INTO vInitialFeeAssigned
 		FROM category c
 			JOIN member m ON c.id = m.categoryFk
 		WHERE m.id = vId;
-	
+
 	SELECT discount INTO vFamilyDiscount
 		FROM family f
 			JOIN member m ON f.id = m.familyFk
@@ -1660,7 +1660,7 @@ BEGIN
 			AND fallaYearFk = vFallaYearFk
 			AND idType = 1
 			AND idConcept = 1;
-	
+
 	SET vInitialFeeAssigned = vInitialFeeAssigned - (vFamilyDiscount * vInitialFeeAssigned / 100);
 	SET vTotalFeeAssigned = vTotalFeeAssigned + vInitialFeeAssigned;
 
@@ -1700,7 +1700,7 @@ BEGIN
 			AND idConcept = 3;
 
 	INSERT INTO balance (memberFk, feeAssigned, feePayed, lotteryAssigned, lotteryPayed, raffleAssigned, rafflePayed)
-		VALUES (vId, vTotalFeeAssigned, vTotalFeePayed, vTotalLotteryAssigned, vTotalLotteryPayed, vTotalRaffleAssigned, vTotalRafflePayed);		
+		VALUES (vId, vTotalFeeAssigned, vTotalFeePayed, vTotalLotteryAssigned, vTotalLotteryPayed, vTotalRaffleAssigned, vTotalRafflePayed);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1770,7 +1770,7 @@ BEGIN
 				fallaYearFk, position, falla, memberFk
 			) VALUES (vFallaYear, 'vocal', 'Sants Patrons', vId);
 		END IF;
-	
+
 		IF vIsCurrentlyRegistered = 1 AND vIsRegistered = 0 THEN
 			DELETE FROM membershipHistory
 			WHERE memberFk = vId AND fallaYearFk = vFallaYear;
@@ -1795,7 +1795,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `regenerateBalance`()
 BEGIN
     DECLARE vDone INT DEFAULT 0;
     DECLARE vId INT;
-    DECLARE vCursor CURSOR FOR 
+    DECLARE vCursor CURSOR FOR
         SELECT id
             FROM member
             WHERE isRegistered = 1;
@@ -1845,7 +1845,7 @@ BEGIN
         SELECT id, actualAmount FROM directDebit;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done_dd = TRUE;
-    
+
     SELECT code INTO v_fallaYearFk
     	FROM fallaYear
     	ORDER BY code DESC
@@ -1991,58 +1991,58 @@ BEGIN
 			WHERE familyFk = vFamilyFk
 				AND isRegistered = 1
 			ORDER BY id;
-	
+
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET vDone = TRUE;
-	
+
 	SET vRemaining = vAmount;
-	
+
 	SELECT id INTO vLastMemberFk
 		FROM member
 		WHERE familyFk = vFamilyFk
 			AND isRegistered = 1
 		ORDER BY id DESC
 		LIMIT 1;
-	
+
 	IF vPayMethod = 'cash' THEN
 		SET vDescription = 'pagat en caixa';
     ELSEIF vPayMethod = 'bank' THEN
         SET vDescription = 'pagat pel banc';
 	END IF;
-	
+
 	OPEN cur_mb;
-	
+
 	pay_loop: LOOP
 		FETCH cur_mb INTO vMemberFk;
 		IF vDone THEN
 			LEAVE pay_loop;
 		END IF;
-	
+
 		IF vRemaining <= 0 THEN
 			LEAVE pay_loop;
 		END IF;
-		
+
 		IF vIdConcept = 1 THEN
 			SELECT (feeAssigned - feePayed) INTO vPending
 				FROM balance
 				WHERE memberFk = vMemberFk;
-		
+
 		ELSEIF vIdConcept = 2 THEN
 			SELECT (lotteryAssigned - lotteryPayed) INTO vPending
 				FROM balance
 				WHERE memberFk = vMemberFk;
-		
+
 		ELSEIF vIdConcept = 3 THEN
 			SELECT (raffleAssigned - rafflePayed) INTO vPending
 				FROM balance
 				WHERE memberFk = vMemberFk;
 		END IF;
-		
+
 		IF vPending <= 0 THEN
 			ITERATE pay_loop;
 		END IF;
-		
+
 		SET vPayment = LEAST(vPending, vRemaining);
-		
+
 		INSERT INTO movement (
 			transactionDate,
 			amount,
@@ -2058,13 +2058,13 @@ BEGIN
 			vMemberFk,
 			vDescription
 		);
-		
+
 		SET vRemaining = vRemaining - vPayment;
-		
+
 	END LOOP;
-	
+
 	CLOSE cur_mb;
-	
+
 	IF vRemaining > 0 THEN
 		INSERT INTO movement (
 			transactionDate,
@@ -2082,7 +2082,7 @@ BEGIN
 			vDescription
 		);
 	END IF;
-	
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2165,9 +2165,9 @@ DELIMITER ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `upsertMembershipHistory`(
-	IN vMemberFk INT, 
-    IN vFallaYearFk INT, 
-    IN vFalla VARCHAR(50), 
+	IN vMemberFk INT,
+    IN vFallaYearFk INT,
+    IN vFalla VARCHAR(50),
     IN vPosition VARCHAR(30)
 )
 BEGIN

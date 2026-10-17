@@ -124,6 +124,27 @@ pnpm run test
 - `pnpm run docker:build`: Build a Docker image for this application
 - `pnpm run docker:run`: Run this application inside a Docker container
 
+The seed creates a local test account with email `tonystark@santspatrons.com`
+and password `StarkDemo2026!`. Its password is stored as a bcrypt hash. Do not
+use this account or password in production.
+
+To reset the database and run the Jest tests against the Docker setup:
+
+> **Warning:** `db:schema` drops and recreates tables in the database selected by
+> `MYSQL_DATABASE`. Use it only with a disposable/test database; it will remove
+> existing data.
+
+```bash
+pnpm run db:schema
+pnpm run seed
+pnpm run test:jest:docker
+```
+
+`pnpm run test:jest` runs Jest directly in the current environment. The
+`:docker` variant rebuilds the `loopback` image and runs Jest in a temporary
+container, so it picks up new or changed test files from the host. Start the
+MariaDB service before running it; it uses the database configured for Docker.
+
 ## 📚 More information
 
 Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
